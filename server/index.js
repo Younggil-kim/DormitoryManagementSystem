@@ -22,3 +22,15 @@ app.post('/api/users/login', (req, res) => {
         message: "로그인 성공"
     })
 })
+
+app.post('/api/users/register', (req, res) => {
+    console.log(req.body.email);
+    console.log(req.body.password);
+    console.log(req.body.name);
+    db.insertUser(req.body.email, req.body.password, req.body.name)
+
+    return res.json({
+        message: "회원가입 성공"
+    })
+
+})
