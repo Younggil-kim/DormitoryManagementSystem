@@ -4,15 +4,15 @@ const config = {
     user:'postgres',
     host:'localhost',
     database: 'SWEngineering',
-    password: '00dudrlf',
-    port: '5432'
+    password: 'hcg1208*',
+    port: '5433'
 }
 
 const pgsql = new pg.Client(config);
 
 pgsql.connect(err => {
     if(err) throw err;
-    // else{
+    // else{~
     //     queryDatabase();
     // }
 })
@@ -41,14 +41,10 @@ function findUser(email, password){
     const query = `
         select * from userInfo where email = '${email}' and pw = '${password}';
     `
-
+    let rows;
     pgsql.query(query)
     .then(res => {
-        const rows = res.rows;
-
-        if(rows.length == 0){
-            console.log(0);
-        }
+         rows = res.rows;
 
         rows.map(row => {
             console.log(`Read: ${JSON.stringify(row)}`);
@@ -57,6 +53,7 @@ function findUser(email, password){
     .catch(err => {
         console.log(err);
     })
+    return rows;
 }
 
 module.exports = {
