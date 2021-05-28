@@ -56,6 +56,17 @@ function findUser(email, password){
     return rows;
 }
 
+function insertUser(email, password, name){
+    const query = `
+        insert into userInfo values ('${email}', '${password}', '${name}');
+    `
+
+    pgsql.query(query)
+    .catch(err => {
+        console.log("err: " + err);
+    })
+}
+
 module.exports = {
-    pgsql, queryDatabase, findUser
+    pgsql, queryDatabase, findUser, insertUser
 }
