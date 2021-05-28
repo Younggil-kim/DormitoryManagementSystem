@@ -4,8 +4,8 @@ const config = {
     user:'postgres',
     host:'localhost',
     database: 'SWEngineering',
-    password: 'hcg1208*',
-    port: '5433'
+    password: '00dudrlf',
+    port: '5432'
 }
 
 const pgsql = new pg.Client(config);
