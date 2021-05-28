@@ -25,7 +25,8 @@ function LoginPage(props){
             email:Email,
             password:Password
         }
-        dispatch(loginUser(body))//로그인 유저라는 액션을 만들어야 함 이제 
+        //로그인 유저라는 액션을 만들어야 함 이제
+        dispatch(loginUser(body))
             .then(response => {
                 if(response.payload.loginSuccess){
                     props.history.push('/')
@@ -33,6 +34,7 @@ function LoginPage(props){
                     alert("잘못된 정보를 입력하셨습니다.");
                 }
             })
+            console.log('hello')
     }
 
     return (

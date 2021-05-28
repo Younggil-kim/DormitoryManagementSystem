@@ -16,4 +16,9 @@ app.post('/api/users/login', (req, res) => {
     var password = req.body.password;
 
     db.findUser(email, password);
+
+    return res.json({
+        loginSuccess: true,
+        message: "로그인 성공"
+    })
 })
