@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import LoginPage from './component/views/LoginPage/LoginPage';
-
+import RegisterPage from './component/views/RegisterPage/RegisterPage';
 
 function App() {
 
@@ -17,6 +17,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/login" component= {LoginPage} />
+          <Route exact path="/register" component= {RegisterPage} />
         </Switch>
       </div>
     </Router>
