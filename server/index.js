@@ -15,12 +15,17 @@ app.post('/api/users/login', (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
 
-    db.findUser(email, password);
-
-    return res.json({
-        loginSuccess: true,
-        message: "로그인 성공"
-    })
+    if(db.findUser(email, password)){
+        return res.json({
+            loginSuccess: true,
+            message: "로그인 성공"
+        })
+    }else{
+        return res.json({
+            loginSuccess: false,
+            message: "로그인 실패"
+        })
+    }
 })
 
 app.post('/api/users/register', (req, res) => {
@@ -30,7 +35,8 @@ app.post('/api/users/register', (req, res) => {
     db.insertUser(req.body.email, req.body.password, req.body.name)
 
     return res.json({
-        message: "회원가입 성공"
+
+        success: true
     })
 
 })
