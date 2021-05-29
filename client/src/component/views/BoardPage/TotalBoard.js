@@ -8,7 +8,7 @@ import {withRouter} from 'react-router-dom';
 
 import {Button} from "react-bootstrap";
 
-function TotalBoard(){
+function TotalBoard(props){
     
     const [viewContent , setViewContent] = useState([]);
 
@@ -19,6 +19,11 @@ function TotalBoard(){
       })
     },[viewContent])
 
+    return (
+      <div>
+        {viewContent}
+      </div>
+    )
 }
 
 
