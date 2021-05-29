@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
-import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,6 +8,7 @@ import {
 
 import LoginPage from './component/views/LoginPage/LoginPage';
 import RegisterPage from './component/views/RegisterPage/RegisterPage';
+import BoardPage from './component/views/BoardPage/BoardPage';
 
 function App() {
 
@@ -18,6 +18,7 @@ function App() {
         <Switch>
           <Route exact path="/login" component= {LoginPage} />
           <Route exact path="/register" component= {RegisterPage} />
+          <Route exact path="/board" component= {BoardPage} />
         </Switch>
       </div>
     </Router>
