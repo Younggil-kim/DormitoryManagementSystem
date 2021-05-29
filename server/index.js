@@ -4,12 +4,13 @@ const app = express()
 const port = 8000
 const db = require('./DB');
 const bodyParser = require('body-parser');
-const { response } = require('express');
-// const cors = require('cors');
+// const { response } = require('express');
+const cors = require('cors');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-// app.use(cors);
+app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -45,6 +46,8 @@ app.post('/api/users/register', (req, res) => {
 app.post('/api/insert', (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
+
+    console.log(title, content, req.body.rewardToken);
 
     if(db.insertBoard(title, content)){
         return res.json({
