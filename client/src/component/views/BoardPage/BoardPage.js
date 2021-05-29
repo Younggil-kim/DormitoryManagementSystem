@@ -5,7 +5,6 @@ import ReactHtmlParser from 'react-html-parser';
 import Axios from 'axios';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {H1} from "react-bootstrap";
 
 import {Button} from "react-bootstrap";
 
@@ -16,15 +15,8 @@ function BoardPage(){
         rewardToken : '',
       })
     
-      const [viewContent , setViewContent] = useState([]);
     
       const [Token, setToken] = useState("");
-
-      useEffect(()=>{
-        Axios.get('http://localhost:8000/api/get').then((response)=>{
-          setViewContent(response.data);
-        })
-      },[viewContent])
     
       const submitReview = ()=>{
         console.log(BoardContent.title, BoardContent.content, BoardContent.rewardToken);
@@ -34,6 +26,7 @@ function BoardPage(){
           rewardToken : BoardContent.rewardToken
         }).then(()=>{
           alert('등록 완료!');
+          props.history.push('/totalboard')
         })
       };
     
