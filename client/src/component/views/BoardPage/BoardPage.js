@@ -8,7 +8,16 @@ import {withRouter} from 'react-router-dom';
 
 import {Button} from "react-bootstrap";
 
-function BoardPage(){
+function BoardPage(props){
+  const [viewContent , setViewContent] = useState([]);
+
+  useEffect(()=>{
+    Axios.get('http://localhost:8000/api/get').then((response)=>{
+      setViewContent(response.data);
+      console.log(viewContent);
+    })
+  },[viewContent])
+
     const [BoardContent, setBoardContent] = useState({
         title: '',
         content: '',
@@ -26,7 +35,8 @@ function BoardPage(){
           rewardToken : BoardContent.rewardToken
         }).then(()=>{
           alert('등록 완료!');
-          props.history.push('/totalboard')
+          // props.history.push('/totalboard')
+          console.log(viewContent);
         })
       };
     
