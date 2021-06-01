@@ -8,15 +8,8 @@ import {withRouter} from 'react-router-dom';
 
 import {Button} from "react-bootstrap";
 
-function BoardPage(props){
-  const [viewContent , setViewContent] = useState([]);
+function TokenPostPage(props){
 
-  // useEffect(()=>{
-  //   Axios.get('http://localhost:8000/api/get').then((response)=>{
-  //     setViewContent(response.data);
-  //     console.log(viewContent);
-  //   })
-  // },[viewContent])
 
     const [BoardContent, setBoardContent] = useState({
         title: '',
@@ -35,8 +28,7 @@ function BoardPage(props){
           rewardToken : BoardContent.rewardToken
         }).then(()=>{
           alert('등록 완료!');
-          // props.history.push('/totalboard')
-          console.log(viewContent);
+          props.history.push('/collection')
         })
       };
     
@@ -51,16 +43,6 @@ function BoardPage(props){
       return (
         <div className="App">
           <h1>도움을 요청해보세요</h1>
-          <div className='movie-container'>
-            {viewContent.map(element =>
-              <div className="title">
-                <h2>{element.title}</h2>
-                <div className="cont">
-                  {ReactHtmlParser(element.content)}
-                </div>
-              </div>
-            )}
-          </div>
           <div className='form-wrapper'>
             <input className="title-input"
               type='text'
@@ -101,4 +83,4 @@ function BoardPage(props){
 
 
 
-export default withRouter(BoardPage)
+export default withRouter(TokenPostPage)
