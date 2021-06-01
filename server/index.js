@@ -46,10 +46,11 @@ app.post('/api/users/register', (req, res) => {
 app.post('/api/insert', (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
+    const token = req.body.rewardToken;
 
     console.log(title, content, req.body.rewardToken);
 
-    if(db.insertBoard(title, content)){
+    if(db.insertBoard(title, content, token)){
         return res.json({
             success: true
         })

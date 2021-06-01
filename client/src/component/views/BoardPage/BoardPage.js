@@ -11,12 +11,12 @@ import {Button} from "react-bootstrap";
 function BoardPage(props){
   const [viewContent , setViewContent] = useState([]);
 
-  useEffect(()=>{
-    Axios.get('http://localhost:8000/api/get').then((response)=>{
-      setViewContent(response.data);
-      console.log(viewContent);
-    })
-  },[viewContent])
+  // useEffect(()=>{
+  //   Axios.get('http://localhost:8000/api/get').then((response)=>{
+  //     setViewContent(response.data);
+  //     console.log(viewContent);
+  //   })
+  // },[viewContent])
 
     const [BoardContent, setBoardContent] = useState({
         title: '',
