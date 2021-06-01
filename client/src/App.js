@@ -8,7 +8,8 @@ import {
 
 import LoginPage from './component/views/LoginPage/LoginPage';
 import RegisterPage from './component/views/RegisterPage/RegisterPage';
-import BoardPage from './component/views/BoardPage/BoardPage';
+import TokenPostPage from './component/views/BoardPage/TokenPost';
+import TokenBoardPage from './component/views/BoardPage/TokenBoard'
 function App() {
 
   return (
@@ -17,7 +18,8 @@ function App() {
         <Switch>
           <Route exact path="/login" component= {LoginPage} />
           <Route exact path="/register" component= {RegisterPage} />
-          <Route exact path="/board" component= {BoardPage} />
+          <Route exact path="/tokenpost" component= {TokenPostPage} />
+          <Route exact path="/tokenboard" component= {TokenBoardPage} />
         </Switch>
       </div>
     </Router>
