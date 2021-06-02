@@ -76,16 +76,26 @@ async function getBoard(){
     .then(res => {
         rows = res.rows;
         
-        // return rows;
     }).catch(err => {
         console.log(err);
     })
 
-    // console.log(rows);
+ 
     return rows;
 
 }
 
+async function deleteBoardByTime(deadline){
+    const query = `
+        delete from simpleBoard where deadLine = '${deadline}';
+    `
+
+    await pgsql.query(query)
+    .catch(err => {
+        console.log(err);
+    })
+}
+
 module.exports = {
-    pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard
+    pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard, deleteBoardByTime
 }

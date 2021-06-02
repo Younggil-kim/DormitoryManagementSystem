@@ -76,6 +76,13 @@ app.post('/api/insert', (req, res) => {
 
 app.get('/api/get', async (req, res) => {
     const rows = await db.getBoard();
-
+    for(var i in rows){
+        var date = new Date(rows[i].deadline).toLocaleString();
+        var now = new Date().toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
+        if(date == now){
+            await db.deleteBoardByTime(rows[i].deadline);
+        }
+    }
     res.send(rows);
 })
+
