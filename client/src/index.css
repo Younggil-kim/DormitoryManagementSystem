@@ -6,7 +6,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.setting{
+  margin-left : 20px;
+}
+.footer {
+  width:100%;
+  height:100px;
+  position:absolute;
+  bottom:0;
+  
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
