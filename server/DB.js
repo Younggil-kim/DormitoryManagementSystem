@@ -56,9 +56,9 @@ async function insertUser(email, password, name){
     })
 }
 
-async function insertBoard(title, content, token){
+async function insertBoard(title, content, reward, deadLine, status){
     const query = `
-        insert into simpleBoard values(null, '${title}', '${content}', ${token});
+        insert into simpleBoard values(null, '${title}', '${content}', ${reward}, '${deadLine}', ${status});
     `
 
     await pgsql.query(query)
