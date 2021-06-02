@@ -42,6 +42,34 @@ function PredictPage(props) {
             </Nav>
             </Container>
         </Navbar>
+        {/* // 학번, GPA, 사는 지역, 봉사점수, 건물정보 */}
+
+        <div style={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center'
+            , width: '100%', height: '100vh'
+        }}>
+            <form style= {{ display: 'flex', flexDirection:'column'}}>
+                <label>학번</label>
+                <input type="email" />
+
+                <label>기숙사 선택</label>
+                <input type="text" />
+
+                <label>평균 학점</label>
+                <input type="text"/>
+
+                <label>사는 지역</label>
+                <input type="text" />
+
+                <label>봉사 점수</label>
+                <input type="text" />
+
+                <br />
+                <Button type="submit">
+                    회원가입
+                </Button>
+            </form>
+        </div>
         </div>
     )
 
