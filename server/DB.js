@@ -89,4 +89,3 @@ async function getBoard(){
 module.exports = {
     pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard
 }
-
