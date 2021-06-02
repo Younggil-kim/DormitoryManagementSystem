@@ -1,10 +1,10 @@
+require('date-utils');
 const express = require('express');
-// const pg = require('pg');
 const app = express()
 const port = 8000
 const db = require('./DB');
 const bodyParser = require('body-parser');
-// const { response } = require('express');
+
 const cors = require('cors');
 const {spawn} = require('child_process');
 // const tlqkf = require('python-shell')
@@ -56,11 +56,14 @@ app.post('/api/users/register', (req, res) => {
 app.post('/api/insert', (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
-    const token = req.body.rewardToken;
+    const reward = req.body.rewardToken;
+    const deadLine = req.body.deadLine;
+    // deadLine = deadLine.replace("T", " ");
+    // var date, time = deadLine.split(" ");
+    // console.log(date, time);
+    const status = req.body.status;
 
-    console.log(title, content, req.body.rewardToken);
-
-    if(db.insertBoard(title, content, token)){
+    if(db.insertBoard(title, content, reward, deadLine, status)){
         return res.json({
             success: true
         })
@@ -73,7 +76,6 @@ app.post('/api/insert', (req, res) => {
 
 app.get('/api/get', async (req, res) => {
     const rows = await db.getBoard();
-    // console.log(rows);
 
     res.send(rows);
 })
