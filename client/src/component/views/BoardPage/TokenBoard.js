@@ -18,7 +18,6 @@ function TokenBoardPage(props){
     useEffect(()=>{
       Axios.get('http://localhost:8000/api/get').then((response)=>{
         setViewContent(response.data);
-        console.log(viewContent);
       })
     },[viewContent])
 
