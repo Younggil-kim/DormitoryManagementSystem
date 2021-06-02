@@ -6,13 +6,23 @@ const db = require('./DB');
 const bodyParser = require('body-parser');
 // const { response } = require('express');
 const cors = require('cors');
+const {spawn} = require('child_process');
+// const tlqkf = require('python-shell')
+// const python = spawn('python', ['./predict.py',201621021,3.5,'Gunpo',6,1]);
+
+// python.stdout.on('data', function(data){
+//     console.log(data.toString('utf-8'));
+// })
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) =>{
+    res.send("Hello World!");
+})
 
 app.listen(port, () => console.log(`listening Port ${port}`));
 
