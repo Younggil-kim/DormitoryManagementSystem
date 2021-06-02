@@ -34,7 +34,7 @@ function TokenPostPage(props){
           content: BoardContent.content,
           rewardToken : BoardContent.rewardToken,
           deadLine : BoardContent.deadLine,
-          status : 'waiting'
+          status : '0'
         }).then(()=>{
           console.log(BoardContent.deadLine);
           alert('등록 완료!');
