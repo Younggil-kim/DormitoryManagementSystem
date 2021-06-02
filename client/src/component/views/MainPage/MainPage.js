@@ -13,18 +13,13 @@ import {Table} from "react-bootstrap";
 import {ListGroup} from "react-bootstrap";
 import TokenBoardPage from '../BoardPage/TokenBoard';
 
-
+//1. 내 정보 get으로 받아오기 (페이지 접속시)
+//2. 게시판 바로가기 링크달아주기
 
 
 function MainPage(props) {
 
     const [ MyInfo, setMyInfo] = useState({
-        sId : '',
-        email : '',
-        name : '',
-        token : '',
-        dorm : '',
-        room : '',
         });
         
     useEffect(()=>{
@@ -76,20 +71,21 @@ function MainPage(props) {
             </Container>
         </Navbar>
             <br />
-            <Table>
+            <h3>내 정보</h3>
+            <Table  striped bordered hover>
                 <thead>
                     <tr>
                         <th>이름</th>
+                        <th>아이디</th>
                         <th>학번</th>
-                        <th>학과</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         <tr>
                         <td>김영길</td>
+                        <td>gom991</td>
                         <td>201621000</td>
-                        <td>미디어학과</td>
                         </tr>
                     }
                 </tbody>
@@ -110,10 +106,102 @@ function MainPage(props) {
                     }
                 </tbody>
             </Table>
+            <br />
+            <h3>게시판 바로가기</h3>
+            <Table  striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>게시판 목록</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                        <td onClick={clickTokenBoard}>도움 요청 게시판</td>
+                        </tr>
+                        <tr>
+                        <td>자유 게시판</td>
+                        </tr>
+                        <tr>
+                        <td>불만사항 접수</td>
+                        </tr>
+                    
+                </tbody>
 
-            <span></span>
-            <Button >기숙사 홈페이지</Button>
-            <Button>매칭 시작</Button>
+            </Table>
+            <br />
+            <h3>시간표</h3>
+            <Table  striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>시간</th>
+                        <th>월요일</th>
+                        <th>화요일</th>
+                        <th>수요일</th>
+                        <th>목요일</th>
+                        <th>금요일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                        <td>09:00~10:30</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+
+                        <tr>
+                        <td>10:30~12:00</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+
+                        <tr>
+                        <td>12:00~13:30</td>
+                        
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+
+                        <tr>
+                        <td>13:30~15:00</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+
+                        <tr>
+                        <td>15:00~16:30</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+
+                        <tr>
+                        <td>16:30~18:00</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+                 
+                </tbody>
+
+            </Table>
             <br />
         <footer class="footer">
         <Navbar bg="dark" variant="dark">

@@ -72,12 +72,14 @@ function TokenBoardPage(props){
 
 
             { status == "0" &&
-            <Table>
+            <Table  striped bordered hover>
                 <thead>
                     <tr>
                         <th>제목</th>
                         <th>내용</th>
                         <th>보상</th>
+                        <th>마감시간</th>
+                        <th>지원</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,6 +89,8 @@ function TokenBoardPage(props){
                             <td>{element.status == 0 && element.title}</td>
                             <td>{element.status == 0 && ReactHtmlParser(element.content)}</td>
                             <td>{element.status == 0 && element.reward}</td>
+                            <td>{element.status == 0 && element.deadline}</td>
+                            <td><Button>지원</Button></td>
                             </tr>
                         )
                     }
@@ -97,7 +101,7 @@ function TokenBoardPage(props){
 
             { status== "1" &&
                 
-                <Table>
+                <Table  striped bordered hover>
                     <thead>
                         <tr>
                             <th>제목</th>
@@ -120,7 +124,7 @@ function TokenBoardPage(props){
             }
             { status == "2" &&
                 <div>
-                <Table>   
+                <Table  striped bordered hover>   
                     <thead>
                         <tr>
                             <th>제목</th>
