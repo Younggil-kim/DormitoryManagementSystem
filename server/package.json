@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "node": "nodemon index.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +16,7 @@
     "cors": "^2.8.5",
     "date-utils": "^1.2.21",
     "express": "^4.17.1",
+    "nodemon": "^2.0.7",
     "pg": "^8.6.0",
     "python-shell": "^3.0.0"
   }
