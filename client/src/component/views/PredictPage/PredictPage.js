@@ -17,7 +17,7 @@ function PredictPage(props) {
     
 
     const [sId, setsId] = useState('');
-    const [dorm, setdorm] = useState('');
+    const [dorm, setdorm] = useState('1');
     const [GPA, setGPA] = useState('');
     const [area, setarea] = useState('');
     const [service, setservice] = useState('');
