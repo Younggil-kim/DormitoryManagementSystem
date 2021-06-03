@@ -49,7 +49,7 @@ function PredictPage(props) {
     }
 
 
-    const onSubmitHandler = (event) => {
+    const OnSubmitHandler = (event) => {
         event.preventDefault(); 
         let body ={
             sid: sId,
@@ -59,20 +59,22 @@ function PredictPage(props) {
             service : service
         }
         console.log(body);
-
         Axios.post('http://localhost:8000/predict',body)
         .then((response) => {
+            console.log(response.data)
             setpercent(response.data.percent);
             setpoint(response.data.point);
-            setposition(response.data.dorm);
+            setposition(response.data.position);
             // props.history.push('/result');
         })
-
-
     }
-    useEffect(()=>{
+    useEffect( ()=>{
+        setpercent(percent);
+        setpoint(point);
+        setposition(position);
 
-      }, point)
+    } );
+
 
 
     const clickTokenBoard = () =>{
@@ -110,7 +112,7 @@ function PredictPage(props) {
             display: 'flex', justifyContent: 'center', alignItems: 'center'
             , width: '100%', height: '100vh'
         }}>
-           <form style= {{ display: 'flex', flexDirection:'column'}} onSubmit={onSubmitHandler}>
+           <form style= {{ display: 'flex', flexDirection:'column'}} onSubmit={OnSubmitHandler}>
                 <label>학번</label>
                 <input type="text" name="sid" onChange={onsIdHandler}/>
 
@@ -138,7 +140,7 @@ function PredictPage(props) {
                 <Button type="submit">
                     예측
                 </Button>
-                <div>{point && <span>당신의 입사점수는 {point}점이고 {position}에 입사할 확률은 {percent}%입니다.</span>} 
+                <div>{<span>당신의 입사점수는 {point}점이고 {position}에 입사할 확률은 {percent}%입니다.</span>} 
                 </div>
             </form>
         </div>
