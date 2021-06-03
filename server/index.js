@@ -86,31 +86,4 @@ app.get('/api/get', async (req, res) => {
     res.send(rows);
 })
 
-var id = [];
-for(var i=0; i<4; i++){
-    for(var j=1; j<51; j++){
-        id.push(201800000+100000*i+j)
-    }
-}
 
-for(var i=0; i<id.length; i++){
-    const query = `
-        insert into student values (${id[i]}, null, null, null, null, null, null);
-    `
-
-    db.pgsql.query(query)
-    .catch(err => {
-        console.log("err: " + err);
-    })
-}
-// async function insertUser(email, password, name){
-//     const query = `
-//         insert into userInfo values ('${email}', '${password}', '${name}');
-//     `
-
-//     await pgsql.query(query)
-//     .catch(err => {
-//         console.log("err: " + err);
-//     })
-// }
-console.log(id.length);
