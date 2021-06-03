@@ -14,6 +14,49 @@ import {Table} from "react-bootstrap";
 
 
 function PredictPage(props) {
+    
+
+    const [sId, setsId] = useState('');
+    const [dorm, setdorm] = useState('');
+    const [GPA, setGPA] = useState('');
+    const [area, setarea] = useState('');
+    const [service, setservice] = useState('');
+
+    const onsIdHandler = (event) => {
+        setsId(event.currentTarget.value)
+    }
+
+    const ondormHandler = (event) => {
+        setdorm(event.currentTarget.value)
+    }
+
+    const onGPAHandler = (event) => {
+        setGPA(event.currentTarget.value)
+    }
+    const onareaHandler = (event) => {
+        setarea(event.currentTarget.value)
+    }
+    const onserviceHandler = (event) => {
+        setservice(event.currentTarget.value)
+    }
+
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault(); 
+        let body ={
+            sid: sId,
+            dorm: dorm,
+            gpa: GPA,
+            area: area,
+            service : service
+        }
+        console.log(body);
+        Axios.post('http://localhost:8000/predict',{body})
+            .then(() => {
+                // props.history.push('/result');
+                props.history.push('/');
+            })
+    }
 
 
     const clickTokenBoard = () =>{
@@ -29,6 +72,9 @@ function PredictPage(props) {
     const clickPredict = () =>{
         props.history.push('/predict');
     }
+
+
+
     return(
         <div>
         <Navbar bg="dark" variant="dark">
@@ -48,25 +94,25 @@ function PredictPage(props) {
             display: 'flex', justifyContent: 'center', alignItems: 'center'
             , width: '100%', height: '100vh'
         }}>
-            <form style= {{ display: 'flex', flexDirection:'column'}}>
+           <form style= {{ display: 'flex', flexDirection:'column'}} onSubmit={onSubmitHandler}>
                 <label>학번</label>
-                <input type="email" />
+                <input type="text" name="sid" onChange={onsIdHandler}/>
 
                 <label>기숙사 선택</label>
-                <input type="text" />
+                <input type="text" name="dorm" onChange={ondormHandler}/>
 
                 <label>평균 학점</label>
-                <input type="text"/>
+                <input type="text" name="GPA" onChange={onGPAHandler}/>
 
                 <label>사는 지역</label>
-                <input type="text" />
+                <input type="text" name="area" onChange={onareaHandler}/>
 
                 <label>봉사 점수</label>
-                <input type="text" />
+                <input type="text" name="service" onChange={onserviceHandler}/>
 
                 <br />
                 <Button type="submit">
-                    회원가입
+                    예측
                 </Button>
             </form>
         </div>
