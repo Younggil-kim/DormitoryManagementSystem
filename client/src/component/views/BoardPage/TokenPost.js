@@ -22,10 +22,6 @@ function TokenPostPage(props){
         deadLine : '',
         status : ''
       })
-
-
-    
-      const [Token, setToken] = useState("");
     
       const submitReview = ()=>{
         console.log(BoardContent.title, BoardContent.content, BoardContent.rewardToken);

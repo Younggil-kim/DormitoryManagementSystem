@@ -25,9 +25,12 @@ function PredictPage(props) {
     const onsIdHandler = (event) => {
         setsId(event.currentTarget.value)
     }
-
-    const ondormHandler = (event) => {
-        setdorm(event.currentTarget.value)
+    let result;
+    const ondormHandler = () => {
+        var e = document.getElementById("sel");
+        result = e.options[e.selectedIndex].value;
+        console.log(result);
+        setdorm(result);
     }
 
     const onGPAHandler = (event) => {
@@ -99,7 +102,15 @@ function PredictPage(props) {
                 <input type="text" name="sid" onChange={onsIdHandler}/>
 
                 <label>기숙사 선택</label>
-                <input type="text" name="dorm" onChange={ondormHandler}/>
+                {/* <input type="text" name="dorm" onChange={ondormHandler}/> */}
+                {
+                <select id= "sel" onChange={ondormHandler}>
+                    <option value = "1" selected>광교관</option>
+                    <option value = "2" >용지관</option>
+                    <option value = "3" >국제학사</option>
+                    <option value = "4" >남제관</option>
+                </select>
+                }
 
                 <label>평균 학점</label>
                 <input type="text" name="GPA" onChange={onGPAHandler}/>

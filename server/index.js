@@ -86,26 +86,4 @@ app.get('/api/get', async (req, res) => {
     res.send(rows);
 })
 
-app.post('/predict', async(req, res)=> {
-    // console.log('hello')
-    const sid = req.body.sid;
-    const gpa = req.body.gpa;
-    const area = req.body.area;
-    const service = req.body.service;
-    const dorm = req.body.dorm;
-    console.log(sid)
-    console.log(gpa)
-    console.log(area)
-    console.log(service)
-    console.log(dorm)
 
-    console.log("Execting python file...")
-
-    const python = spawn('python', ['./predict.py',sid, gpa, area, service, dorm]);
-
-    python.stdout.on('data', function(data){
-        var lst = data.toString('utf-8').replace("\r\n", "").split(" ");
-        console.log(lst);
-        res.send(lst[1]);
-    })
-})
