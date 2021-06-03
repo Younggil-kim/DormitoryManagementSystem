@@ -59,14 +59,20 @@ function PredictPage(props) {
             service : service
         }
         console.log(body);
+
         Axios.post('http://localhost:8000/predict',body)
-            .then((response) => {
-                setpercent(response.data.percent);
-                setpoint(response.data.point);
-                setposition(response.data.dorm);
-                // props.history.push('/result');
-            })
+        .then((response) => {
+            setpercent(response.data.percent);
+            setpoint(response.data.point);
+            setposition(response.data.dorm);
+            // props.history.push('/result');
+        })
+
+
     }
+    useEffect(()=>{
+
+      }, point)
 
 
     const clickTokenBoard = () =>{
