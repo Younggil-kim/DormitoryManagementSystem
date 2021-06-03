@@ -17,7 +17,6 @@ class predict():
             self.df = pd.read_csv('./data.csv')
             self.x_data = None
             self.y_data = None
-
             self.result = self.run()
 
 
