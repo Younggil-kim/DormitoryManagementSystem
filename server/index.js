@@ -87,6 +87,7 @@ app.get('/api/get', async (req, res) => {
 })
 
 app.post('/predict', async(req, res)=> {
+    // console.log('hello')
     const sid = req.body.sid;
     const gpa = req.body.gpa;
     const area = req.body.area;
