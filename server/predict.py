@@ -14,7 +14,6 @@ class predict():
         self.df = pd.read_csv('./data.csv')
         self.x_data = None
         self.y_data = None
-
         self.result = self.run()
 
 
@@ -220,5 +219,5 @@ if __name__ == '__main__':
 
       p = predict(sID, GPA, distance, service, dNum)
       # print(f"당신이 {p.getdName()}에 합격할 확률은 {p.getResult()}%입니다.")
-      print(p.getdName(), p.getResult())
+      print(p.getdName(), p.getResult(), p.num)
 

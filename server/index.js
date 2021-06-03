@@ -106,6 +106,10 @@ app.post('/predict', async(req, res)=> {
     python.stdout.on('data', function(data){
         var lst = data.toString('utf-8').replace("\r\n", "").split(" ");
         console.log(lst);
-        res.send(lst[1]);
+        res.json({
+            dorm: lst[0],
+            percent: lst[1],
+            score: lst[2]
+        });
     })
 })
