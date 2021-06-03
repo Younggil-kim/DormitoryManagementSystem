@@ -86,31 +86,25 @@ app.get('/api/get', async (req, res) => {
     res.send(rows);
 })
 
-var id = [];
-for(var i=0; i<4; i++){
-    for(var j=1; j<51; j++){
-        id.push(201800000+100000*i+j)
-    }
-}
+app.post('/predict', async(req, res)=> {
+    const sid = req.body.sid;
+    const gpa = req.body.gpa;
+    const area = req.body.area;
+    const service = req.body.service;
+    const dorm = req.body.dorm;
+    console.log(sid)
+    console.log(gpa)
+    console.log(area)
+    console.log(service)
+    console.log(dorm)
 
-for(var i=0; i<id.length; i++){
-    const query = `
-        insert into student values (${id[i]}, null, null, null, null, null, null);
-    `
+    console.log("Execting python file...")
 
-    db.pgsql.query(query)
-    .catch(err => {
-        console.log("err: " + err);
+    const python = spawn('python', ['./predict.py',sid, gpa, area, service, dorm]);
+
+    python.stdout.on('data', function(data){
+        var lst = data.toString('utf-8').replace("\r\n", "").split(" ");
+        console.log(lst);
+        res.send(lst[1]);
     })
-}
-// async function insertUser(email, password, name){
-//     const query = `
-//         insert into userInfo values ('${email}', '${password}', '${name}');
-//     `
-
-//     await pgsql.query(query)
-//     .catch(err => {
-//         console.log("err: " + err);
-//     })
-// }
-console.log(id.length);
+})

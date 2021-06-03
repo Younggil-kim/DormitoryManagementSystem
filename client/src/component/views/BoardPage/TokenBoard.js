@@ -88,7 +88,7 @@ function TokenBoardPage(props){
                             <td>{element.status == 0 && element.title}</td>
                             <td>{element.status == 0 && ReactHtmlParser(element.content)}</td>
                             <td>{element.status == 0 && element.reward}</td>
-                            <td>{element.status == 0 && element.deadline}</td>
+                            <td>{element.status == 0 && element.deadline.replace("T", "  ")}</td>
                             <td><Button>지원</Button></td>
                             </tr>
                         )

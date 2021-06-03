@@ -51,7 +51,7 @@ function PredictPage(props) {
             service : service
         }
         console.log(body);
-        Axios.post('http://localhost:8000/predict',{body})
+        Axios.post('http://localhost:8000/predict',body)
             .then(() => {
                 // props.history.push('/result');
                 props.history.push('/');

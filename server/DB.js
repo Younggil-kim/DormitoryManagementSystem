@@ -29,7 +29,7 @@ function queryDatabase(){
 
 async function findUser(email, password){
     const query = `
-        select * from userInfo where email = '${email}' and pw = '${password}';
+        select * from student where email = '${email}' and password = '${password}';
     `
     // let rows;
     await pgsql.query(query)
