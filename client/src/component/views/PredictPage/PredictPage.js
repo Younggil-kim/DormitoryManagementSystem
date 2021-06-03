@@ -22,6 +22,11 @@ function PredictPage(props) {
     const [area, setarea] = useState('');
     const [service, setservice] = useState('');
 
+
+    const [point, setpoint] = useState('');
+    const [percent, setpercent] = useState('');
+    const [position, setposition] = useState('');
+
     const onsIdHandler = (event) => {
         setsId(event.currentTarget.value)
     }
@@ -55,9 +60,11 @@ function PredictPage(props) {
         }
         console.log(body);
         Axios.post('http://localhost:8000/predict',body)
-            .then(() => {
+            .then((response) => {
+                setpercent(response.data.percent);
+                setpoint(response.data.point);
+                setposition(response.data.dorm);
                 // props.history.push('/result');
-                props.history.push('/');
             })
     }
 
@@ -125,6 +132,8 @@ function PredictPage(props) {
                 <Button type="submit">
                     예측
                 </Button>
+                <div>{point && <span>당신의 입사점수는 {point}점이고 {position}에 입사할 확률은 {percent}%입니다.</span>} 
+                </div>
             </form>
         </div>
         </div>
