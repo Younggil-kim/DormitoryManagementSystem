@@ -26,7 +26,12 @@ function PredictPage(props) {
     const [percent, setpercent] = useState('');
     const [position, setposition] = useState('');
 
-    const [result, setresult] = useState([]);
+    const [res, setres] = useState({
+        dorm: '',
+        percent: '',
+        score:'',
+
+    });
 
 
     const onsIdHandler = (event) => {
@@ -63,12 +68,13 @@ function PredictPage(props) {
         console.log(body);
         Axios.post('http://localhost:8000/predict',body)
         .then((response) => {
-            setresult(response.data);
-
+            setres(response.data);
             console.log(response.data)
-            setpercent(response.data.percent);
-            setscore(response.data.score);
-            setposition(response.data.position);
+
+
+            // setpercent(response.data.percent);
+            // setscore(response.data.score);
+            // setposition(response.data.position);
             // props.history.push('/result');
         })
     }
@@ -144,13 +150,11 @@ function PredictPage(props) {
                 <Button type="submit">
                     예측
                 </Button>
-                <div>{<span>당신의 입사점수는 {score}점이고 {position}에 입사할 확률은 {percent}%입니다.</span>} 
-                </div>
+                {/* <div>{<span>당신의 입사점수는 {score}점이고 {position}에 입사할 확률은 {percent}%입니다.</span>} 
+                </div> */}
 
                 <div>{
-                    result.map(e =>
-                        <span>당신의 입사점수는 {e.score}점이고 {e.position}에 입사할 확률은 {e.percent}%입니다.</span> 
-                        )
+                    <span>당신의 입사점수는 {result.score}점이고 {result.score}에 입사할 확률은 {result.score}%입니다.</span>
                     }
                     
                 </div>
