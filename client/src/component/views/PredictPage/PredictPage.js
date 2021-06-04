@@ -79,10 +79,10 @@ function PredictPage(props) {
         })
     }
     useEffect( ()=>{
-        setpercent(percent);
-        setpoint(score);
-        setposition(position);
-
+        // setpercent(percent);
+        // setpoint(score);
+        // setposition(position);
+        setres(res);
     } );
 
 
@@ -154,7 +154,7 @@ function PredictPage(props) {
                 </div> */}
 
                 <div>{
-                    <span>당신의 입사점수는 {result.score}점이고 {result.score}에 입사할 확률은 {result.score}%입니다.</span>
+                    <span>당신의 입사점수는 {res.score}점이고 {res.dorm}에 입사할 확률은 {res.percent}%입니다.</span>
                     }
                     
                 </div>
