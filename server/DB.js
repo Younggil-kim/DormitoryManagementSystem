@@ -20,7 +20,7 @@ function queryDatabase(){
         const rows = res.rows;
 
         rows.map(row => {
-            console.log(`Read: ${JSON.stringify(row)}`);
+            // console.log(`Read: ${JSON.stringify(row)}`);
         });
     })
     .catch(err => {
@@ -33,7 +33,7 @@ async function findUser(email, password){
         select * from student where email = '${email}' and password = '${password}';
     `
     await pgsql.query(query)
-    .then(res => {
+    .then(async res => {
         rows = res.rows;
         // console.log(rows[0]);
         var sid = rows[0].sid;
@@ -43,7 +43,7 @@ async function findUser(email, password){
             update student set usrtoken = '${token}' where sid = ${sid};
         `
 
-        pgsql.query(query)
+        await pgsql.query(query)
         .then(res => {
             rows[0].usrtoken = token;
         })
@@ -52,7 +52,7 @@ async function findUser(email, password){
         })
 
         rows.map(row => {
-            console.log(`Read: ${JSON.stringify(row)}`);
+            // console.log(`Read: ${JSON.stringify(row)}`);
         });
     })
     .catch(err => {
@@ -151,16 +151,40 @@ async function findByToken(token){
     const query = `
         select * from student where usrtoken = '${token}';
     `
+    const rows = await pgsql.query(query) 
+    
+    jwt.verify(token, 'secret', function(err, decoded){
+        findOne(decoded, token, function(err, row){
+            console.log("row")
+            console.log(row);            
+
+
+    })
+})
+    // .then(res => {
+    //         rows = res.rows;
+            
+    //         // rows.map(row => {
+    //         //     id = row.sid;
+    //         //     console.log(`Read: ${JSON.stringify(row)}`);           
+    //         //  });
+    //     })
+
+}
+
+async function findOne(decoded, token){
+    const query = `
+        select * from student where sid = ${decoded} and usrtoken = '${token}'
+    `
+
     await pgsql.query(query)
     .then(res => {
+        // console.log(res.rows);
         rows = res.rows;
-
-        rows.map(row => {
-            console.log(`Read: ${JSON.stringify(row)}`);
-        });
+        // console.log("rows")
+        // console.log(rows);
+        cb(rows);
     })
-
-    return rows;
 }
 
 module.exports = {
