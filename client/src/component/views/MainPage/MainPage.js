@@ -53,7 +53,16 @@ function MainPage(props) {
         props.history.push('/predict');
     }
 
-
+    const clickLogout = () => {
+        Axios.get('/api/users/logout')
+            .then(response => {
+                if(response.data.success){
+                    props.history.push("/login")
+                }else{
+                    alert("로그아웃 실패")
+                }
+            })
+    }
 
     return(
         <div>
@@ -65,6 +74,8 @@ function MainPage(props) {
                 <Nav.Link onClick = {clickPredict}>합격 예측</Nav.Link>
                 <Nav.Link onClick = {clickTokenBoard}>도움게시판</Nav.Link>
                 <Nav.Link onClick = {clickLogin}>로그인</Nav.Link>
+                <Nav.Link onClick = {clickLogout}>로그아웃</Nav.Link>
+                
             </Nav>
             </Container>
         </Navbar>
