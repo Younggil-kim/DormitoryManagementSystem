@@ -170,14 +170,18 @@ app.get('/api/users/logout', auth, async (req, res) => {
 })
 
 app.get('/api/users/userinfo', auth,async(req, res) => {
-    // let token =  req.token;
-    console.log(req.sid);
-    // const query = `
-    //     select * from student where usrtoken = '${req.token}';
-    // `
-    // let user;
-    // await db.pgsql.query(query)
-    // .then(response => {
-    //     console.log(response.rows);
-    // })
+    let token =  req.cookies.x_auth;
+    console.log(req.cookies.x_auth);
+    const query = `
+        select * from student where usrtoken = '${token}';
+    `
+    let user;
+    await db.pgsql.query(query)
+    .then(response => {
+        // console.log(response)
+        user = response.rows;
+        // console.log(response.rows);
+    })
+    // console.log(user);
+    res.send(user);
 })
