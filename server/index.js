@@ -128,16 +128,26 @@ app.post('/predict', async(req, res)=> {
     })
 })
 
-app.get('/api/users/auth', auth, (req, res) => {
+app.get('/api/auth', auth, async (req, res) => {
+    console.log("일단 여기")
+    const query = `
+        select * from student where sid = ${req.sid}
+    `
+
+    rows = await db.pgsql.query(query)
+    console.log("tlqkf")
+    console.log(rows.rows[0])
+
     res.status(200).json({
-        sid: req.body.sid,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        token: req.body.token,
-        dorm: req.body.dorm,
-        room: req.body.room,
-        usrtoken : req.body.usrtoken,
-        isadmin : req.body.isadmin === 0 ? false : true   
+        sid: rows.rows[0].sid,
+        name: rows.rows[0].name,
+        email: rows.rows[0].email,
+        password: rows.rows[0].password,
+        token: rows.rows[0].token,
+        dorm: rows.rows[0].dorm,
+        room: rows.rows[0].room,
+        usrtoken : rows.rows[0].usrtoken,
+        isadmin : rows.rows[0].isadmin == null ? false : true,   
+        isAuth: true
     })
 })
