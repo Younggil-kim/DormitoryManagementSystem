@@ -17,9 +17,16 @@ import {Table} from "react-bootstrap";
 
 function MainPage(props) {
 
-    const [ MyInfo, setMyInfo] = useState({
-        });
+    const [ MyInfo, setMyInfo] = useState([]);
         
+    useEffect(()=>{
+        Axios.get('/api/users/userinfo').then((response)=>{
+            setMyInfo(response.data);
+            console.log(response.data);
+        })
+        },[])
+        
+
 
 
     const clickAjouLib =() =>{
@@ -50,20 +57,13 @@ function MainPage(props) {
         Axios.get('/api/users/logout')
             .then(response => {
                 if(response.data.success){
-                    props.history.push("/")
+                    props.history.push("/login")
                 }else{
                     alert("로그아웃 실패")
                 }
             })
     }
 
-
-    const clickusrinfo = () => {
-        Axios.get('/api/users/userinfo')
-            .then((response)=>{
-            setMyInfo(response.data);
-        })
-    }
     return(
         <div>
         <Navbar bg="dark" variant="dark">
@@ -75,8 +75,6 @@ function MainPage(props) {
                 <Nav.Link onClick = {clickTokenBoard}>도움게시판</Nav.Link>
                 <Nav.Link onClick = {clickLogin}>로그인</Nav.Link>
                 <Nav.Link onClick = {clickLogout}>로그아웃</Nav.Link>
-                
-                <Nav.Link onClick = {clickusrinfo}>정보갱신</Nav.Link>
                 
             </Nav>
             </Container>
@@ -93,14 +91,17 @@ function MainPage(props) {
                 </thead>
                 <tbody>
                     {
-                        <tr>
-                        <td>김영길</td>
-                        <td>gom991</td>
-                        <td>201621000</td>
-                        </tr>
+                        MyInfo.map(e =>
+                            <tr>
+                            <td>{e.name}</td>
+                            <td>{e.email}</td>
+                            <td>{e.sid}</td>
+                            </tr>
+                        )
                     }
                 </tbody>
                 <thead>
+
                     <tr>
                         <th>기숙사명</th>
                         <th>호실</th>
@@ -108,12 +109,14 @@ function MainPage(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        <tr>
-                        <td>광교관</td>
-                        <td>204호</td>
-                        <td>50</td>
-                        </tr>
+                     {
+                        MyInfo.map(e =>
+                            <tr>
+                            <td>{e.dorm}</td>
+                            <td>{e.room}</td>
+                            <td>{e.token}</td>
+                            </tr>
+                        )
                     }
                 </tbody>
             </Table>
