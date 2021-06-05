@@ -22,11 +22,11 @@ function App() {
       <Router>
       <div>
         <Switch>
-          <Route exact path="/login" component= {Auth(LoginPage, false)} />
+          <Route defualt path="/" component= {Auth(LoginPage, false)} />
           <Route exact path="/register" component= {Auth(RegisterPage ,null)} />
           <Route exact path="/tokenpost" component= {Auth(TokenPostPage, true)} />
           <Route exact path="/tokenboard" component= {Auth(TokenBoardPage, true)} />
-          <Route exact path="/" component= {Auth(MainPage, true)} />
+          <Route exact path="/main" component= {Auth(MainPage, true)} />
           <Route exact path="/predict" component= {Auth(PredictPage,null)}/>
           <Route exact path="/admin" component= {Auth(AdminPage, true)}/>
         </Switch>
