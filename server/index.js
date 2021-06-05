@@ -4,15 +4,16 @@ const app = express()
 const port = 8000
 const db = require('./DB');
 const bodyParser = require('body-parser');
-
+const jwt = require('jsonwebtoken'); 
 const cors = require('cors');
 const {spawn} = require('child_process');
-
-
+const cookieParser = require('cookie-parser');
+const {auth} = require('./middleware/auth');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req, res) =>{
     res.send("Hello World!");
@@ -27,10 +28,13 @@ app.post('/api/users/login', async (req, res) => {
     const temp = await db.findUser(email, password);
     
     if(temp.length == 1){
-        return res.json({
-            loginSuccess: true,
-            message: "로그인 성공"
-        })
+        res.cookie("x_auth", temp[0].usrtoken)
+        .status(200)
+        .json({loginSuccess: true})
+        // return res.json({
+        //     loginSuccess: true,
+        //     message: "로그인 성공"
+        // })
     }else{
         return res.json({
             loginSuccess: false,
@@ -121,5 +125,19 @@ app.post('/predict', async(req, res)=> {
             percent: lst[1],
             score: lst[2]
         });
+    })
+})
+
+app.get('/api/users/auth', auth, (req, res) => {
+    res.status(200).json({
+        sid: req.body.sid,
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        token: req.body.token,
+        dorm: req.body.dorm,
+        room: req.body.room,
+        usrtoken : req.body.usrtoken,
+        isadmin : req.body.isadmin === 0 ? false : true   
     })
 })
