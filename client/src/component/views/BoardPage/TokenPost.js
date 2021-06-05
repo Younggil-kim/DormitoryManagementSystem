@@ -5,10 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Axios from 'axios';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-
 import {Button} from "react-bootstrap";
-import {InputGroup} from "react-bootstrap";
-
 import {Navbar} from "react-bootstrap";
 import {Container} from "react-bootstrap";
 import {Nav} from "react-bootstrap";
@@ -49,12 +46,12 @@ function TokenPostPage(props){
         props.history.push('/tokenboard');
       }
       const clickHome = () => {
-          props.history.push('/');
-        
-      }
-      const clickLogin = () =>{
-          props.history.push('/login');
-      }
+        props.history.push('/main');
+      
+    }
+    const clickLogin = () =>{
+        props.history.push('/');
+    }
       const clickPredict = () =>{
           props.history.push('/predict');
       }
