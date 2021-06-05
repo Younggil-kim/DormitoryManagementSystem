@@ -30,7 +30,7 @@ function LoginPage(props){
         dispatch(loginUser(body))
             .then(response => {
                 if(response.payload.loginSuccess){
-                    props.history.push('/')
+                    props.history.push('/main')
                 }else{
                     alert("잘못된 정보를 입력하셨습니다.");
                 }

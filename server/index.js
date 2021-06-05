@@ -26,7 +26,8 @@ app.post('/api/users/login', async (req, res) => {
     var password = req.body.password;
 
     const temp = await db.findUser(email, password);
-    
+    console.log(temp)
+
     if(temp.length == 1){
         res.cookie("x_auth", temp[0].usrtoken)
         .status(200)
@@ -149,5 +150,19 @@ app.get('/api/auth', auth, async (req, res) => {
         usrtoken : rows.rows[0].usrtoken,
         isadmin : rows.rows[0].isadmin == null ? false : true,   
         isAuth: true
+    })
+})
+
+app.get('/api/users/logout', auth, async (req, res) => {
+    const query = `
+        update student set usrtoken = null where sid = ${req.sid};
+    `
+    await db.pgsql.query(query)
+    .catch(err => {
+        return res.json({success: false, err})
+    })
+
+    return res.status(200).send({
+        success: true
     })
 })

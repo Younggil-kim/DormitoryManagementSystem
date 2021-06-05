@@ -54,7 +54,7 @@ function RegisterPage(props){
         dispatch(registerUser(body))//로그인 유저라는 액션을 만들어야 함 이제 
             .then(response => {
                 if(response.payload.success){
-                    props.history.push("/login")
+                    props.history.push("/")
                 } else{
                     alert("회원가입에 실패하셨습니다.");
                 }
@@ -64,11 +64,11 @@ function RegisterPage(props){
         props.history.push('/tokenboard');
     }
     const clickHome = () => {
-        props.history.push('/');
+        props.history.push('/main');
       
     }
     const clickLogin = () =>{
-        props.history.push('/login');
+        props.history.push('/');
     }
     const clickPredict = () =>{
         props.history.push('/predict');
