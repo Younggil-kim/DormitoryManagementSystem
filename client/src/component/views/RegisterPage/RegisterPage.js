@@ -19,6 +19,8 @@ function RegisterPage(props){
     const [Password, setPassword] = useState("");
     const [Name, setName] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
+    const [sId, setsId] = useState("");
+
 
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value)
@@ -32,7 +34,10 @@ function RegisterPage(props){
     const onNameHandler = (event) => {
         setName(event.currentTarget.value)
     }
-
+    const onSIdHandler = (event) => {
+        setsId(event.currentTarget.value)
+    }
+    
     const onSubmitHandler = (event) => {
         event.preventDefault(); 
         if(Password !== ConfirmPassword){
@@ -42,8 +47,10 @@ function RegisterPage(props){
         let body ={
             email:Email,
             name:Name,
-            password:Password
+            password:Password,
+            sid : sId,
         }
+        console.log(body);
         dispatch(registerUser(body))//로그인 유저라는 액션을 만들어야 함 이제 
             .then(response => {
                 if(response.payload.success){
@@ -86,11 +93,16 @@ function RegisterPage(props){
             <form style= {{ display: 'flex', flexDirection:'column'}}
                 onSubmit={onSubmitHandler}
             >
+
+
+                <label>이름</label>
+                <input type="text" value={Name} onChange={onNameHandler}/>
+
+                <label>학번</label>
+                <input type="text" value={sId} onChange={onSIdHandler}/>
+
                 <label>Email</label>
                 <input type="email" value={Email} onChange={onEmailHandler}/>
-
-                <label>Name</label>
-                <input type="text" value={Name} onChange={onNameHandler}/>
 
                 <label>비밀번호</label>
                 <input type="password" value={Password} onChange={onPasswordHandler}/>
