@@ -32,7 +32,7 @@ async function findUser(email, password){
         select * from student where email = '${email}' and password = '${password}';
     `
     // let rows;
-    console.log(query);
+    // console.log(query);
     await pgsql.query(query)
     .then(res => {
         rows = res.rows;
@@ -44,6 +44,8 @@ async function findUser(email, password){
     .catch(err => {
         console.log(err);
     })
+
+    return rows;
 }
 
 async function insertUser(email, password, name){
@@ -68,9 +70,9 @@ async function insertBoard(title, content, reward, deadLine, status){
     })
 }
 
-async function getBoard(){
+async function getBoard(status){
     const query = `
-        select * from simpleBoard;
+        select * from simpleBoard where status = ${status};
     `
 
     await pgsql.query(query)

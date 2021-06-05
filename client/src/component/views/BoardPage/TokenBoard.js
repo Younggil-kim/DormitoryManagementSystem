@@ -20,7 +20,7 @@ function TokenBoardPage(props){
         result = e.options[e.selectedIndex].value;
         setStatus(result);
         console.log("status", result)
-        Axios.get('http://localhost:8000/api/get', {status:result})
+        Axios.post('http://localhost:8000/api/tokenboard', {status:result})
         .then((response)=>{
             setViewContent(response.data);
             console.log(response.data);

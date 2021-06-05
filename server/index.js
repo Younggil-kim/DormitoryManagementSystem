@@ -20,11 +20,13 @@ app.get('/', (req, res) =>{
 
 app.listen(port, () => console.log(`listening Port ${port}`));
 
-app.post('/api/users/login', (req, res) => {
+app.post('/api/users/login', async (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
 
-    if(db.findUser(email, password)){
+    const temp = await db.findUser(email, password);
+    
+    if(temp.length == 1){
         return res.json({
             loginSuccess: true,
             message: "로그인 성공"
@@ -80,8 +82,10 @@ app.post('/api/insert', (req, res) => {
     }
 })
 
-app.get('/api/get', async (req, res) => {
-    const rows = await db.getBoard();
+app.post('/api/tokenboard', async (req, res) => {
+    console.log(req.body.status)
+    const status = req.body.status
+    const rows = await db.getBoard(status);
     for(var i in rows){
         var date = new Date(rows[i].deadline).toLocaleString();
         var now = new Date().toLocaleString("ko-KR", {timeZone: "Asia/Seoul"});
