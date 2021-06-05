@@ -9,6 +9,7 @@ const cors = require('cors');
 const {spawn} = require('child_process');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
+const { response } = require('express');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -128,7 +129,7 @@ app.post('/predict', async(req, res)=> {
         });
     })
 })
-
+let token;
 app.get('/api/auth', auth, async (req, res) => {
     console.log("일단 여기")
     const query = `
@@ -138,7 +139,7 @@ app.get('/api/auth', auth, async (req, res) => {
     rows = await db.pgsql.query(query)
     console.log("tlqkf")
     console.log(rows.rows[0])
-
+    token = rows.rows[0].token
     res.status(200).json({
         sid: rows.rows[0].sid,
         name: rows.rows[0].name,
@@ -154,6 +155,7 @@ app.get('/api/auth', auth, async (req, res) => {
 })
 
 app.get('/api/users/logout', auth, async (req, res) => {
+    console.log(req.sid);
     const query = `
         update student set usrtoken = null where sid = ${req.sid};
     `
@@ -165,4 +167,17 @@ app.get('/api/users/logout', auth, async (req, res) => {
     return res.status(200).send({
         success: true
     })
+})
+
+app.get('/api/users/userinfo', auth,async(req, res) => {
+    // let token =  req.token;
+    console.log(req.sid);
+    // const query = `
+    //     select * from student where usrtoken = '${req.token}';
+    // `
+    // let user;
+    // await db.pgsql.query(query)
+    // .then(response => {
+    //     console.log(response.rows);
+    // })
 })

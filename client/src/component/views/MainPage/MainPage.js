@@ -20,13 +20,6 @@ function MainPage(props) {
     const [ MyInfo, setMyInfo] = useState({
         });
         
-    useEffect(()=>{
-        Axios.get('http://localhost:8000/api/userinfo').then((response)=>{
-            setMyInfo(response.data);
-        })
-        },[MyInfo])
-        
-
 
 
     const clickAjouLib =() =>{
@@ -57,13 +50,20 @@ function MainPage(props) {
         Axios.get('/api/users/logout')
             .then(response => {
                 if(response.data.success){
-                    props.history.push("/login")
+                    props.history.push("/")
                 }else{
                     alert("로그아웃 실패")
                 }
             })
     }
 
+
+    const clickusrinfo = () => {
+        Axios.get('/api/users/userinfo')
+            .then((response)=>{
+            setMyInfo(response.data);
+        })
+    }
     return(
         <div>
         <Navbar bg="dark" variant="dark">
@@ -75,6 +75,8 @@ function MainPage(props) {
                 <Nav.Link onClick = {clickTokenBoard}>도움게시판</Nav.Link>
                 <Nav.Link onClick = {clickLogin}>로그인</Nav.Link>
                 <Nav.Link onClick = {clickLogout}>로그아웃</Nav.Link>
+                
+                <Nav.Link onClick = {clickusrinfo}>정보갱신</Nav.Link>
                 
             </Nav>
             </Container>
