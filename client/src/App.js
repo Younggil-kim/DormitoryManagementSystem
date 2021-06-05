@@ -22,8 +22,8 @@ function App() {
       <Router>
       <div>
         <Switch>
-          <Route defualt path="/" component= {Auth(LoginPage, false)} />
-          <Route exact path="/register" component= {Auth(RegisterPage ,null)} />
+          <Route exact path="/" component= {Auth(LoginPage, false)} />
+          <Route exact path="/register" component= {Auth(RegisterPage ,false)} />
           <Route exact path="/tokenpost" component= {Auth(TokenPostPage, true)} />
           <Route exact path="/tokenboard" component= {Auth(TokenBoardPage, true)} />
           <Route exact path="/main" component= {Auth(MainPage, true)} />

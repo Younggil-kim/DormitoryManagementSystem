@@ -15,17 +15,17 @@ export default function (SpecificComponent, option, adminRoute = null){
                 console.log("여기",response.payload);
                 if(!response.payload.isAuth){
                     if(option === true){
-                        props.history.push('/login');
+                        props.history.push('/');
                     }
                 } else{
                     //로그인 한 상태
                     if(adminRoute && !response.payload.isAdmin){
                         //어드민이 아닌데 로그인되어있는경우
-                        props.history.push('/');
+                        props.history.push('/main');
                     }else{
                         //
                         if(option === false){
-                            props.history.push('/')
+                            props.history.push('/main')
                         }
                     }
 
