@@ -14,12 +14,21 @@ import {Table} from "react-bootstrap";
 function TokenBoardPage(props){
     const [viewContent , setViewContent] = useState([]);
     const [status, setStatus] = useState("");
-
+    let result;
     useEffect(()=>{
-      Axios.get('http://localhost:8000/api/get').then((response)=>{
-        setViewContent(response.data);
-      })
-    },[viewContent])
+        var e = document.getElementById("sel");
+        result = e.options[e.selectedIndex].value;
+        setStatus(result);
+        console.log("status", result)
+        Axios.get('http://localhost:8000/api/get', {status:result})
+        .then((response)=>{
+            setViewContent(response.data);
+            console.log(response.data);
+        })
+    }, result)
+    
+
+
 
     const posting =()=> {
         props.history.push('/tokenpost');
@@ -37,13 +46,8 @@ function TokenBoardPage(props){
     const clickPredict = () =>{
         props.history.push('/predict');
     }
-    let result;
 
-    useEffect(()=>{
-        var e = document.getElementById("sel");
-        result = e.options[e.selectedIndex].value;
-        setStatus(result);
-      }, result)
+
 
     return(          
     <div>
@@ -70,7 +74,7 @@ function TokenBoardPage(props){
             }
 
 
-            { status == "0" &&
+            { status === "0" &&
             <Table  striped bordered hover>
                 <thead>
                     <tr>
@@ -85,10 +89,10 @@ function TokenBoardPage(props){
                     {
                         viewContent.map(element =>
                             <tr>
-                            <td>{element.status == 0 && element.title}</td>
-                            <td>{element.status == 0 && ReactHtmlParser(element.content)}</td>
-                            <td>{element.status == 0 && element.reward}</td>
-                            <td>{element.status == 0 && element.deadline.replace("T", "  ")}</td>
+                            <td>{element.status === 0 && element.title}</td>
+                            <td>{element.status === 0 && ReactHtmlParser(element.content)}</td>
+                            <td>{element.status === 0 && element.reward}</td>
+                            <td>{element.status === 0 && element.deadline.replace("T", "  ")}</td>
                             <td><Button>지원</Button></td>
                             </tr>
                         )
@@ -98,7 +102,7 @@ function TokenBoardPage(props){
             </Table>
             }
 
-            { status== "1" &&
+            { status === "1" &&
                 
                 <Table  striped bordered hover>
                     <thead>
@@ -112,16 +116,16 @@ function TokenBoardPage(props){
                         {
                             viewContent.map(element =>
                                 <tr>
-                                <td>{element.status == 1 && element.title}</td>
-                                <td>{element.status == 1 && ReactHtmlParser(element.content)}</td>
-                                <td>{element.status == 1 && element.reward}</td>
+                                <td>{element.status === 1 && element.title}</td>
+                                <td>{element.status === 1 && ReactHtmlParser(element.content)}</td>
+                                <td>{element.status === 1 && element.reward}</td>
                                 </tr>
                             )
                         }
                     </tbody>
                 </Table>
             }
-            { status == "2" &&
+            { status === "2" &&
                 <div>
                 <Table  striped bordered hover>   
                     <thead>
@@ -135,9 +139,9 @@ function TokenBoardPage(props){
                         {
                             viewContent.map(element =>
                                 <tr>
-                                <td>{element.status == 2 && element.title}</td>
-                                <td>{element.status == 2 && ReactHtmlParser(element.content)}</td>
-                                <td>{element.status == 2 && element.reward}</td>
+                                <td>{element.status === 2 && element.title}</td>
+                                <td>{element.status === 2 && ReactHtmlParser(element.content)}</td>
+                                <td>{element.status === 2 && element.reward}</td>
                                 </tr>
                             )
                         }
