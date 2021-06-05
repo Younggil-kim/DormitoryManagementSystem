@@ -12,6 +12,9 @@ import TokenPostPage from './component/views/BoardPage/TokenPost';
 import TokenBoardPage from './component/views/BoardPage/TokenBoard';
 import MainPage from './component/views/MainPage/MainPage';
 import PredictPage from './component/views/PredictPage/PredictPage';
+import AdminPage from './component/views/MainPage/AdminMainPage';
+import Auth from './hoc/auth';
+
 
 function App() {
 
@@ -19,12 +22,13 @@ function App() {
       <Router>
       <div>
         <Switch>
-          <Route exact path="/login" component= {LoginPage} />
-          <Route exact path="/register" component= {RegisterPage} />
-          <Route exact path="/tokenpost" component= {TokenPostPage} />
-          <Route exact path="/tokenboard" component= {TokenBoardPage} />
-          <Route exact path="/" component= {MainPage} />
-          <Route exact path="/predict" component= {PredictPage} />
+          <Route exact path="/login" component= {Auth(LoginPage, false)} />
+          <Route exact path="/register" component= {Auth(RegisterPage ,null)} />
+          <Route exact path="/tokenpost" component= {Auth(TokenPostPage, true)} />
+          <Route exact path="/tokenboard" component= {Auth(TokenBoardPage, true)} />
+          <Route exact path="/" component= {Auth(MainPage, true)} />
+          <Route exact path="/predict" component= {Auth(PredictPage,null)}/>
+          <Route exact path="/admin" component= {Auth(AdminPage, true)}/>
         </Switch>
       </div>
     </Router>
