@@ -7,12 +7,6 @@ const bodyParser = require('body-parser');
 
 const cors = require('cors');
 const {spawn} = require('child_process');
-// const tlqkf = require('python-shell')
-// const python = spawn('python', ['./predict.py',201621021,3.5,'Gunpo',6,1]);
-
-// python.stdout.on('data', function(data){
-//     console.log(data.toString('utf-8'));
-// })
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -43,13 +37,25 @@ app.post('/api/users/login', (req, res) => {
     }
 })
 
-app.post('/api/users/register', (req, res) => {
-    db.insertUser(req.body.email, req.body.password, req.body.name)
+app.post('/api/users/register', async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const sid = parseInt(req.body.sid);
+    const name = req.body.name;
 
-    return res.json({
 
-        success: true
-    })
+    const temp = await db.setUser(email, name, password, sid);
+    console.log(temp);
+    if(temp){
+        return res.json({
+            success: true
+        })
+    }
+    else{
+        return res.json({
+            success: false
+        })
+    }
 
 })
 

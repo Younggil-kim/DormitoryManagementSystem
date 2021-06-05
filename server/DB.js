@@ -96,6 +96,40 @@ async function deleteBoardByTime(deadline){
     })
 }
 
+async function setUser(email, name, password, sid){
+    temp = await isPass(sid);
+    
+    if(!temp)
+        return false;
+
+    const query = `
+        update student set email = '${email}', name = '${name}', password = '${password}' where sid = ${sid}; 
+    `
+
+    await pgsql.query(query)
+    .catch(err => {
+        console.log("ERROR: " + err);
+    })
+
+    return true;
+}
+
+async function isPass(sid){
+    const query = `
+        select * from student where sid = ${sid};
+    `
+
+    result = await pgsql.query(query)
+    .catch(err => {
+        console.log("ERROR: " + err);
+    })
+
+    if(result.rows.length != 0)
+        return true;
+    else
+        return false;
+}
+
 module.exports = {
-    pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard, deleteBoardByTime
+    pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard, deleteBoardByTime, setUser
 }
