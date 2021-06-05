@@ -32,6 +32,7 @@ async function findUser(email, password){
         select * from student where email = '${email}' and password = '${password}';
     `
     // let rows;
+    console.log(query);
     await pgsql.query(query)
     .then(res => {
         rows = res.rows;
@@ -98,7 +99,7 @@ async function deleteBoardByTime(deadline){
 
 async function setUser(email, name, password, sid){
     temp = await isPass(sid);
-    
+
     if(!temp)
         return false;
 

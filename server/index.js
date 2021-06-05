@@ -99,11 +99,11 @@ app.post('/predict', async(req, res)=> {
     const area = req.body.area;
     const service = req.body.service;
     const dorm = req.body.dorm;
-    console.log(sid)
-    console.log(gpa)
-    console.log(area)
-    console.log(service)
-    console.log(dorm)
+    // console.log(sid)
+    // console.log(gpa)
+    // console.log(area)
+    // console.log(service)
+    // console.log(dorm)
 
     console.log("Execting python file...")
 
