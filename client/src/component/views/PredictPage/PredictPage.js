@@ -62,7 +62,7 @@ function PredictPage(props) {
             service : service
         }
         console.log(body);
-        Axios.post('http://localhost:8000/predict',body)
+        Axios.post('http://localhost:8000/api/predict',body)
         .then((response) => {
             setres(response.data);
             console.log(response.data)

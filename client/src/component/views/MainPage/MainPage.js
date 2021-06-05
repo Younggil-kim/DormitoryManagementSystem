@@ -10,8 +10,6 @@ import {Navbar} from "react-bootstrap";
 import {Container} from "react-bootstrap";
 import {Nav} from "react-bootstrap";
 import {Table} from "react-bootstrap";
-import {ListGroup} from "react-bootstrap";
-import TokenBoardPage from '../BoardPage/TokenBoard';
 
 //1. 내 정보 get으로 받아오기 (페이지 접속시)
 //2. 게시판 바로가기 링크달아주기
@@ -23,7 +21,7 @@ function MainPage(props) {
         });
         
     useEffect(()=>{
-        Axios.get('http://localhost:8000/userinfo').then((response)=>{
+        Axios.get('http://localhost:8000/api/userinfo').then((response)=>{
             setMyInfo(response.data);
         })
         },[MyInfo])
