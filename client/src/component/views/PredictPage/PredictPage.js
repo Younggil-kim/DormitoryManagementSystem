@@ -22,10 +22,6 @@ function PredictPage(props) {
     const [area, setarea] = useState('');
     const [service, setservice] = useState('');
 
-    const [score, setscore] = useState('');
-    const [percent, setpercent] = useState('');
-    const [position, setposition] = useState('');
-
     const [res, setres] = useState({
         dorm: '',
         percent: '',
