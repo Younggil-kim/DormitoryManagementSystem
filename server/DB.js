@@ -1,5 +1,6 @@
 const pg = require('pg');
 const config = require('./secret');
+const jwt = require('jsonwebtoken');
 
 const pgsql = new pg.Client(config.config);
 
@@ -31,12 +32,25 @@ async function findUser(email, password){
     const query = `
         select * from student where email = '${email}' and password = '${password}';
     `
-    // let rows;
-    // console.log(query);
     await pgsql.query(query)
     .then(res => {
         rows = res.rows;
+        // console.log(rows[0]);
+        var sid = rows[0].sid;
+        var token = jwt.sign(sid, 'secret')
         
+        const query = `
+            update student set usrtoken = '${token}' where sid = ${sid};
+        `
+
+        pgsql.query(query)
+        .then(res => {
+            rows[0].usrtoken = token;
+        })
+        .catch(err => {
+            console.log("Error " + err);
+        })
+
         rows.map(row => {
             console.log(`Read: ${JSON.stringify(row)}`);
         });
@@ -133,6 +147,22 @@ async function isPass(sid){
         return false;
 }
 
+async function findByToken(token){
+    const query = `
+        select * from student where usrtoken = '${token}';
+    `
+    await pgsql.query(query)
+    .then(res => {
+        rows = res.rows;
+
+        rows.map(row => {
+            console.log(`Read: ${JSON.stringify(row)}`);
+        });
+    })
+
+    return rows;
+}
+
 module.exports = {
-    pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard, deleteBoardByTime, setUser
+    pgsql, queryDatabase, findUser, insertUser, insertBoard, getBoard, deleteBoardByTime, setUser, findByToken
 }
