@@ -55,8 +55,8 @@ function TokenBoardPage(props){
         props.history.push('/predict');
     }
 
-    const deleteHandler = () => {
-        Axios.get("/api/delete/")
+    function deleteHandler(pid){
+        Axios.post("/api/delete/", {postid : pid})
             .then((response) => {
                 console.log(response.data)
                 alert("정상적으로 삭제되었습니다.")
@@ -92,6 +92,7 @@ function TokenBoardPage(props){
             <Table  striped bordered hover>
                 <thead>
                     <tr>
+                        <th>번호</th>
                         <th>제목</th>
                         <th>내용</th>
                         <th>보상</th>
@@ -104,13 +105,14 @@ function TokenBoardPage(props){
                     {
                         viewContent.map(element =>
                             <tr>
+                            <td>{element.status === 0 && element.postid}</td>
                             <td>{element.status === 0 && element.title}</td>
                             <td>{element.status === 0 && ReactHtmlParser(element.content)}</td>
                             <td>{element.status === 0 && element.reward}</td>
                             <td>{element.status === 0 && element.deadline.replace("T", "  ")}</td>
-                            <td><Button>지원</Button></td>
-                            <td>{element.sid === mySid}<Button onClick={deleteHandler}>삭제</Button></td>
-                            
+                            <td><Button>{element.status === 0 && "지원"}</Button>
+                            { element.sid === mySid  && <Button onClick={deleteHandler(element.postid)}>삭제</Button>}
+                            </td>
                             </tr>
                         )
                     }
@@ -124,18 +126,26 @@ function TokenBoardPage(props){
                 <Table  striped bordered hover>
                     <thead>
                         <tr>
-                            <th>제목</th>
-                            <th>내용</th>
-                            <th>보상</th>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>보상</th>
+                        <th>마감시간</th>
+                        <th>지원</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             viewContent.map(element =>
                                 <tr>
+                                <td>{element.status === 1 && element.postid}</td>
                                 <td>{element.status === 1 && element.title}</td>
                                 <td>{element.status === 1 && ReactHtmlParser(element.content)}</td>
                                 <td>{element.status === 1 && element.reward}</td>
+                                <td>{element.status === 1 && element.deadline.replace("T", "  ")}</td>
+                                <td><Button>{element.status === 1 && "지원"}</Button>
+                                {element.sid === mySid &&<Button onClick={deleteHandler}>삭제</Button>}
+                                </td>
                                 </tr>
                             )
                         }
@@ -147,18 +157,26 @@ function TokenBoardPage(props){
                 <Table  striped bordered hover>   
                     <thead>
                         <tr>
-                            <th>제목</th>
-                            <th>내용</th>
-                            <th>보상</th>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>보상</th>
+                        <th>마감시간</th>
+                        <th>지원</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             viewContent.map(element =>
                                 <tr>
+                                <td>{element.status === 2 && element.postid}</td>
                                 <td>{element.status === 2 && element.title}</td>
                                 <td>{element.status === 2 && ReactHtmlParser(element.content)}</td>
                                 <td>{element.status === 2 && element.reward}</td>
+                                <td>{element.status === 2 && element.deadline.replace("T", "  ")}</td>
+                                <td><Button>{element.status === 2 && "지원"}</Button>
+                                {element.sid === mySid &&<Button onClick={deleteHandler}>삭제</Button>}
+                                </td>
                                 </tr>
                             )
                         }
