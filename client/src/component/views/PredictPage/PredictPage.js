@@ -145,8 +145,8 @@ function PredictPage(props) {
             , width: '100%', height: '100vh'
         }}>
            <form style= {{ display: 'flex', flexDirection:'column'}} onSubmit={OnSubmitHandler}>
-                <label>학번</label>
-                <input type="text" name="sid" onChange={onsIdHandler}/>
+                {/* <label>학번</label>
+                <input type="text" name="sid" onChange={onsIdHandler}/> */}
 
                 <label>기숙사 선택</label>
                 {/* <input type="text" name="dorm" onChange={ondormHandler}/> */}

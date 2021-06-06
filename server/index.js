@@ -10,6 +10,7 @@ const {spawn} = require('child_process');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
 const { isBuffer } = require('util');
+const { response } = require('express');
 // const { response } = require('express');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -23,7 +24,7 @@ app.get('/', (req, res) =>{
 
 app.listen(port, () => console.log(`listening Port ${port}`));
 
-app.post('/api/users/login', async (req, res) => {
+app.post('/api/post/login', async (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
 
@@ -129,7 +130,7 @@ app.get('/api/get/mystudentid', (req, res) => {
 
 app.post('/api/predict', async(req, res)=> {
     // console.log('hello')
-    const sid = req.body.sid;
+    // const sid = req.body.sid;
     const gpa = req.body.gpa;
     const area = req.body.area;
     const service = req.body.service;
@@ -142,7 +143,7 @@ app.post('/api/predict', async(req, res)=> {
 
     console.log("Execting python file...")
 
-    const python = spawn('python', ['./predict.py',sid, gpa, area, service, dorm]);
+    const python = spawn('python', ['./predict.py', gpa, area, service, dorm]);
 
     python.stdout.on('data', function(data){
         var lst = data.toString('utf-8').replace("\r\n", "").split(" ");
@@ -179,7 +180,7 @@ app.get('/api/auth', auth, async (req, res) => {
     })
 })
 
-app.get('/api/users/logout', auth, async (req, res) => {
+app.get('/api/get/logout', auth, async (req, res) => {
     // console.log(req.sid);
     const query = `
         update student set usrtoken = null where sid = ${req.sid};
@@ -194,7 +195,7 @@ app.get('/api/users/logout', auth, async (req, res) => {
     })
 })
 
-app.get('/api/users/userinfo', auth,async(req, res) => {
+app.get('/api/get/userinfo', auth,async(req, res) => {
     let token =  req.cookies.x_auth;
     // console.log(req.cookies.x_auth);
     const query = `
@@ -299,3 +300,62 @@ app.post('/api/delete/', async (req, res) => {
     
 })
 
+app.post('/api/post/setstate/progress', async (req, res) => {
+    let token = req.cookies.x_auth
+    let index = req.body.index
+    let sid;
+
+    jwt.verify(token, 'secret', (err, decode) => {
+        if(err) throw err;
+        sid =  decode
+    })
+
+    const query = `
+        update simpleboard set helper = ${sid}, status = 1 where index = ${index};
+    `
+
+    await db.pgsql.query(query)
+    
+    return res.json({
+        success: true
+    })
+})
+
+ app.post('/api/post/tradetoken', async (req, res) =>{
+    let index = req.body.index
+    let token = req.cookies.x_auth
+    let sid, helper, reward;
+
+    const query = `
+        select sid, helper, reward from simpleboard where index = ${index};
+    `
+    await db.pgsql.query(query)
+    .then(response => {
+        sid = response.rows[0].sid
+        helper = response.rows[0].helper
+        reward =  response.rows[0].reward
+    })
+
+    const setquery = `
+        update simpleboard set status = 2 where index = ${index};
+    `
+    await db.pgsql.query(setquery)
+    .then(response => {
+        res.json({
+            success: true
+        })
+    }).catch(err => {
+        console.log(err)
+    })
+
+    const exchangetoken = `
+        update student set token = token - ${reward} where sid = ${sid};
+        update student set token = token + ${reward} where sid = ${helper};
+    `
+
+    await db.pgsql.query(exchangetoken)
+    .catch(err => {
+        console.log(err)
+    })
+
+ })

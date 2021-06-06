@@ -5,11 +5,11 @@ import pandas as pd
 class predict():
       
 
-  def __init__(self, sID, GPA, distance, service, dNum):
+  def __init__(self, GPA, distance, service, dNum):
         tf.disable_v2_behavior()
         self.dName = None
         self.dNum = int(dNum)
-        self.sID = int(sID)
+      #   self.sID = int(sID)
         self.num = self.calPoint(float(GPA), str(distance), int(service))
         self.df = pd.read_csv('./data.csv')
         self.x_data = None
@@ -202,11 +202,11 @@ if __name__ == '__main__':
       # distance = input("지역을 입력하시오. >> ")
       # service = int(input("봉사 점수를 입력하시오. >> "))
 
-      sID = sys.argv[1] 
-      GPA = float(sys.argv[2])
-      distance = sys.argv[3]
-      service = int(sys.argv[4])
-      dNum = int(sys.argv[5])
+      # sID = sys.argv[1] 
+      GPA = float(sys.argv[1])
+      distance = sys.argv[2]
+      service = int(sys.argv[3])
+      dNum = int(sys.argv[4])
 
       # print("#"*10)
       # print("1. 광교관")
@@ -217,7 +217,7 @@ if __name__ == '__main__':
         
       # dNum = int(input("기숙사를 입력하시오. >> "))
 
-      p = predict(sID, GPA, distance, service, dNum)
+      p = predict( GPA, distance, service, dNum)
       # print(f"당신이 {p.getdName()}에 합격할 확률은 {p.getResult()}%입니다.")
       print(p.getdName(), p.getResult(), p.num)
 
