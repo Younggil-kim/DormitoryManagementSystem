@@ -19,7 +19,7 @@ export default function (SpecificComponent, option, adminRoute = null){
                     }
                 } else{
                     //로그인 한 상태
-                    if(adminRoute && !response.payload.isAdmin){
+                    if(adminRoute && !response.payload.isadmin){
                         //어드민이 아닌데 로그인되어있는경우
                         props.history.push('/main');
                     }else{

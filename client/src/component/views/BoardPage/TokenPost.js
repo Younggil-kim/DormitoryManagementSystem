@@ -22,7 +22,7 @@ function TokenPostPage(props){
     
       const submitReview = ()=>{
         console.log(BoardContent.title, BoardContent.content, BoardContent.rewardToken);
-        Axios.post('http://localhost:8000/api/insert', {
+        Axios.post('/api/insert', {
           title: BoardContent.title,
           content: BoardContent.content,
           rewardToken : BoardContent.rewardToken,
@@ -101,12 +101,12 @@ function TokenPostPage(props){
                   content: data
                 })
               }}
-              onBlur={(event, editor) => {
-                console.log('Blur.', editor);
-              }}
-              onFocus={(event, editor) => {
-                console.log('Focus.', editor);
-              }}
+              // onBlur={(event, editor) => {
+              //   console.log('Blur.', editor);
+              // }}
+              // onFocus={(event, editor) => {
+              //   console.log('Focus.', editor);
+              // }}
             />
           </div>
           <Button className="submit-button" onClick={submitReview}>저장</Button>

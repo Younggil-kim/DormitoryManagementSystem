@@ -177,7 +177,7 @@ function PredictPage(props) {
                 </div> */}
 
                 <div>{
-                    <span>당신의 입사점수는 {res.score}점이고 {res.dorm}에 입사할 확률은 {res.percent}%입니다.</span>
+                    <span>당신의 입사점수는 {res.score}점이고 광교관에 입사할 확률은 {res.percent}%입니다.</span>
                     }
                     
                 </div>
