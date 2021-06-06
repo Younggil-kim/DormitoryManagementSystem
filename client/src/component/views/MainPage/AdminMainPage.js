@@ -59,33 +59,35 @@ function AdminMainPage(props){
                 reject(new Error(err));
             }
 
-      }
+      })
+    }
       
-      function LoadingButton() {
-        const [isLoading, setLoading] = useState(false);
-        const [isCompleted , setCompleted] = useState(false);
+    function LoadingButton() {
+    const [isLoading, setLoading] = useState(false);
+    const [isCompleted , setCompleted] = useState(false);
 
-        useEffect(() => {
-          if (isLoading) {
-            simulateNetworkRequest().then(() => {
-              setLoading(false);
-            });
-          }
-        }, [isLoading]);
-      
-        const handleClick = () => {
-            setLoading(true);
-            setCompleted(true);
+    useEffect(() => {
+        if (isLoading) {
+        simulateNetworkRequest().then(() => {
+            setLoading(false);
+        });
         }
-        return (
-          <Button
-            variant="primary"
-            disabled={isLoading}
-            onClick={!isLoading ? handleClick : null}
-          >
-            {isLoading ? 'Loading…' :  isCompleted ? '합격자 데이테베이스 연동 완료' : '합격자 데이터베이스 받아오기'}
-          </Button>
-
+    }, [isLoading]);
+    
+    const handleClick = () => {
+        setLoading(true);
+        setCompleted(true);
+    }
+    return (
+        <Button
+        variant="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? handleClick : null}
+        >
+        {isLoading ? 'Loading…' :  isCompleted ? '합격자 데이테베이스 연동 완료' : '합격자 데이터베이스 받아오기'}
+        </Button>
+    )}
+    
     return(
         <div>
             <Navbar bg="dark" variant="dark">
@@ -137,8 +139,8 @@ function AdminMainPage(props){
 
 
     )
+    }
 
-}
 
 
 export default withRouter(AdminMainPage)

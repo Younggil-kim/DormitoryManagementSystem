@@ -9,7 +9,7 @@ const cors = require('cors');
 const {spawn} = require('child_process');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
-const { response } = require('express');
+// const { response } = require('express');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -102,7 +102,7 @@ app.post('/api/tokenboard', async (req, res) => {
     res.send(rows);
 })
 
-app.post('/predict', async(req, res)=> {
+app.post('/api/predict', async(req, res)=> {
     // console.log('hello')
     const sid = req.body.sid;
     const gpa = req.body.gpa;
@@ -184,4 +184,41 @@ app.get('/api/users/userinfo', auth,async(req, res) => {
     })
     // console.log(user);
     res.send(user);
+})
+
+app.get('/api/get/student', async (req, res) => {
+    let query = `
+        select count(*) from student;
+    `
+    let count;
+    await db.pgsql.query(query)
+    .then(response => {
+        count = response.rows[0].count;
+    })
+
+    if(count != 0){
+        return res.json({
+            success: false
+        })
+    }
+    
+    var id = [];
+    for(var i=0; i<4; i++){
+        for(var j=1; j<51; j++){
+            id.push(201800000+100000*i+j)
+        }
+    }
+
+    for(var i=0; i<id.length; i++){
+        const query = `
+            insert into student values (${id[i]}, null, null, null, 100, null, null);
+        `
+
+        db.pgsql.query(query)
+    }
+
+    return res.json({
+        success: true
+    })
+
 })
