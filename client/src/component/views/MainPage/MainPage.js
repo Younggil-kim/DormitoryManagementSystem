@@ -57,7 +57,7 @@ function MainPage(props) {
         Axios.get('/api/users/logout')
             .then(response => {
                 if(response.data.success){
-                    props.history.push("/login")
+                    props.history.push("/")
                 }else{
                     alert("로그아웃 실패")
                 }
@@ -90,7 +90,7 @@ function MainPage(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {   
                         MyInfo.map(e =>
                             <tr>
                             <td>{e.name}</td>

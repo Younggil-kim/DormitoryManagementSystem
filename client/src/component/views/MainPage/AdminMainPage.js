@@ -58,7 +58,7 @@ function AdminMainPage(props){
             }catch(err){
                 reject(new Error(err));
             }
-        })
+
       }
       
       function LoadingButton() {
@@ -85,8 +85,7 @@ function AdminMainPage(props){
           >
             {isLoading ? 'Loading…' :  isCompleted ? '합격자 데이테베이스 연동 완료' : '합격자 데이터베이스 받아오기'}
           </Button>
-            );
-        }
+
     return(
         <div>
             <Navbar bg="dark" variant="dark">
