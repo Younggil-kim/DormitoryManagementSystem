@@ -9,6 +9,7 @@ const cors = require('cors');
 const {spawn} = require('child_process');
 const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
+const { isBuffer } = require('util');
 // const { response } = require('express');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -247,12 +248,38 @@ app.get('/api/get/student', async (req, res) => {
 
 })
 
-app.post('/api/delete/', (req, res) => {
-    index = req.body.index
+app.post('/api/delete/', async (req, res) => {
 
-    let query = `
-        delete from simpleboard where index = ${index};
+    index = req.body.index
+    let token = req.cookies.x_auth;
+    let sid;
+    let canDelete;
+    let findQuery = `
+        select sid from simpleboard where index = ${index}; 
     `
+    
+    await db.pgsql.query(findQuery)
+    .then(response => {
+        sid = response.rows[0].sid
+    })
+
+    jwt.verify(token, 'secret', (err, decoded) => {
+        console.log(sid)
+        console.log(decoded)
+        if(err) throw err;
+        if(decoded != sid){
+            canDelete = false;
+        }
+        else{
+            canDelete = true
+        }
+    })
+
+    if(canDelete){
+        let query = `
+    delete from simpleboard where index = ${index};
+    `   
+
     db.pgsql.query(query)
     .then(response => {
         return res.json({
@@ -264,4 +291,11 @@ app.post('/api/delete/', (req, res) => {
             success: false
         })
     })
+    }
+
+    return res.json({
+        success: false
+    })
+    
 })
+
