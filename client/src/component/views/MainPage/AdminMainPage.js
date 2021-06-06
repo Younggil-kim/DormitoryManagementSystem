@@ -39,16 +39,50 @@ function AdminMainPage(props){
     const clickPredict = () =>{
         props.history.push('/predict');
     }
-    const clickDormStudent = () =>{
-        //action
-    }
     const clickMatching = () => {
         // action
     }
+    function waitingMatching(){
+        return new Promise((resolve, reject) => {
+            try{
+                const request = Axios.get('api/get/match')
+                    .then(response => {return response.data})
 
-    function simulateNetworkRequest() {
+                resolve(request)
+            }catch(err){
+                reject(new Error(err));
+            }
+
+      })
+    }
+    function LoadingAlgrithmButton() {
+        const [isLoading, setLoading] = useState(false);
+        const [isCompleted , setCompleted] = useState(false);
+    
+        useEffect(() => {
+            if (isLoading) {
+                waitingMatching().then(() => {
+                setLoading(false);
+            });
+            }
+        }, [isLoading]);
         
-        
+        const handleClick = () => {
+            setLoading(true);
+            setCompleted(true);
+        }
+        return (
+            <Button
+            variant="primary"
+            disabled={isLoading}
+            onClick={!isLoading ? handleClick : null}
+            >
+            {isLoading ? '알고리즘을 통해 배정중입니다…' :  isCompleted ? '전원 방 배정 완료' : '방 배정 시작하기'}
+            </Button>
+        )}
+
+
+    function waitingRequest() { 
         return new Promise((resolve, reject) => {
             try{
                 const request = Axios.get('api/get/student')
@@ -68,7 +102,7 @@ function AdminMainPage(props){
 
     useEffect(() => {
         if (isLoading) {
-        simulateNetworkRequest().then(() => {
+            waitingRequest().then(() => {
             setLoading(false);
         });
         }
@@ -84,7 +118,7 @@ function AdminMainPage(props){
         disabled={isLoading}
         onClick={!isLoading ? handleClick : null}
         >
-        {isLoading ? 'Loading…' :  isCompleted ? '합격자 데이테베이스 연동 완료' : '합격자 데이터베이스 받아오기'}
+        {isLoading ? '데이테베이스 연동중...' :  isCompleted ? '합격자 데이테베이스 연동 완료' : '합격자 데이터베이스 받아오기'}
         </Button>
     )}
     
@@ -113,7 +147,7 @@ function AdminMainPage(props){
                             </td>
                             </tr>
                             <tr>
-                            <td onClick={clickMatching}> <Button>방 배정 시작하기 </Button> </td>
+                            <td> <LoadingAlgrithmButton /></td>
 
                             </tr>
                             <tr>
