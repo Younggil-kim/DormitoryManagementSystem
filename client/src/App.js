@@ -28,7 +28,7 @@ function App() {
           <Route exact path="/tokenboard" component= {Auth(TokenBoardPage, true)} />
           <Route exact path="/main" component= {Auth(MainPage, true)} />
           <Route exact path="/predict" component= {Auth(PredictPage,null)}/>
-          <Route exact path="/admin" component= {Auth(AdminPage, true, 1)}/>
+          <Route exact path="/admin" component= {Auth(AdminPage, true)}/>
         </Switch>
       </div>
     </Router>
