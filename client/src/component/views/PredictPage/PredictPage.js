@@ -52,8 +52,7 @@ function PredictPage(props) {
     }
 
 
-    const OnSubmitHandler = (event) => {
-        event.preventDefault(); 
+    const OnSubmitHandler = () => {
         let body ={
             sid: sId,
             dorm: dorm,
@@ -62,26 +61,53 @@ function PredictPage(props) {
             service : service
         }
         console.log(body);
-        Axios.post('http://localhost:8000/api/predict',body)
-        .then((response) => {
-            setres(response.data);
-            console.log(response.data)
+        
+        return new Promise((resolve, reject) => {
+            try{
+                const request = Axios.post('/api/predict',body)
+                    .then(response => {return response.data})
 
-
-            // setpercent(response.data.percent);
-            // setscore(response.data.score);
-            // setposition(response.data.position);
-            // props.history.push('/result');
+                resolve(request)
+            }catch(err){
+                reject(new Error(err));
+            }
         })
-    }
-    useEffect( ()=>{
-        // setpercent(percent);
-        // setpoint(score);
-        // setposition(position);
+        .then((data) => {
+            console.log(data)
+            setres(data);
+        })
+        }
+    
+
+    useEffect(()=>{
         setres(res);
     } );
 
+      
+    function LoadingButton() {
+        const [isLoading, setLoading] = useState(false);
 
+        useEffect(() => {
+        if (isLoading) {
+            OnSubmitHandler().then(() => {
+            setLoading(false);
+            });
+        }
+        }, [isLoading]);
+
+        const handleClick = () => setLoading(true);
+
+        return (
+        <Button type="submit"
+            variant="primary"
+            disabled={isLoading}
+            onClick={!isLoading ? handleClick : null}
+        >
+            {isLoading ? '예측중...' : '합격예측'}
+        </Button>
+        )
+    }
+      
 
     const clickTokenBoard = () =>{
         props.history.push('/tokenboard');
@@ -143,9 +169,10 @@ function PredictPage(props) {
                 <input type="text" name="service" onChange={onserviceHandler}/>
 
                 <br />
-                <Button type="submit">
+                <LoadingButton />
+                {/* <Button type="submit">
                     예측
-                </Button>
+                </Button> */}
                 {/* <div>{<span>당신의 입사점수는 {score}점이고 {position}에 입사할 확률은 {percent}%입니다.</span>} 
                 </div> */}
 
