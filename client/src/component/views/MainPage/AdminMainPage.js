@@ -108,13 +108,13 @@ function AdminMainPage(props){
                     <tbody>
                         
                             <tr>
-                            <td onClick={clickDormStudent}><Button>합격자 받아오기 </Button></td>
-                            </tr>
-                            <tr>
-                            <td onClick={clickMatching}> <Button>방 배정 시작하기 </Button> </td>
                             <td>
                                 <LoadingButton />
                             </td>
+                            </tr>
+                            <tr>
+                            <td onClick={clickMatching}> <Button>방 배정 시작하기 </Button> </td>
+
                             </tr>
                             <tr>
                             <td> <Button>불만사항 답변하기 </Button></td>

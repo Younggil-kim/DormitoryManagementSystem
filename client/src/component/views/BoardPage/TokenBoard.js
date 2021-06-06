@@ -145,7 +145,7 @@ function TokenBoardPage(props){
                             <td>{element.status === 0 && element.reward}</td>
                             <td>{element.status === 0 && element.deadline.replace("T", "  ")}</td>
                             {
-                            element.sid === mySid &&
+                            element.sid !== mySid &&
                             <td> <Button onClick= {() => setPostState(element.index)}>{element.status === 0 && "지원" }</Button></td>
                             }
                             {element.sid === mySid &&            
