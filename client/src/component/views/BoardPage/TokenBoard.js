@@ -56,7 +56,6 @@ function TokenBoardPage(props){
     }
 
     const deletepost = function deleteHandler(index){
-        console.log("@@@@@@@@@@")
         Axios.post('/api/delete/', {index : index})
         .then((response) => {
             if(response.data.success)
