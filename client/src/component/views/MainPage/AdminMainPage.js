@@ -45,6 +45,51 @@ function AdminMainPage(props){
     const clickMatching = () => {
         // action
     }
+
+    function simulateNetworkRequest() {
+        
+        
+        return new Promise((resolve, reject) => {
+            try{
+                const request = Axios.get('api/get/student')
+                    .then(response => {return response.data})
+
+                resolve(request)
+            }catch(err){
+                reject(new Error(err));
+            }
+
+        }
+            
+        );
+      }
+      
+      function LoadingButton() {
+        const [isLoading, setLoading] = useState(false);
+        const [isCompleted , setCompleted] = useState(false);
+
+        useEffect(() => {
+          if (isLoading) {
+            simulateNetworkRequest().then(() => {
+              setLoading(false);
+            });
+          }
+        }, [isLoading]);
+      
+        const handleClick = () => {
+            setLoading(true);
+            setCompleted(true);
+        }
+        return (
+          <Button
+            variant="primary"
+            disabled={isLoading}
+            onClick={!isLoading ? handleClick : null}
+          >
+            {isLoading ? 'Loading…' :  isCompleted ? '합격자 데이테베이스 연동 완료' : '합격자 데이터베이스 받아오기'}
+          </Button>
+             );
+         }
     return(
         <div>
             <Navbar bg="dark" variant="dark">
@@ -69,6 +114,9 @@ function AdminMainPage(props){
                             </tr>
                             <tr>
                             <td onClick={clickMatching}> <Button>방 배정 시작하기 </Button> </td>
+                            <td>
+                                <LoadingButton />
+                            </td>
                             </tr>
                             <tr>
                             <td> <Button>불만사항 답변하기 </Button></td>
