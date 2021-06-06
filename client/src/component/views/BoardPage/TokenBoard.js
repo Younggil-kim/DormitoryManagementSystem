@@ -69,6 +69,33 @@ function TokenBoardPage(props){
         })
         
     }
+    const  tradeToken = function tradeTokens(index){
+        Axios.post('/api/post/tradetoken', {index : index})
+        .then((response) => {
+            if(response.data.success)
+            {
+                alert("정상적으로 종료되었습니다.");
+
+            }
+            else{
+                alert("삭제에 실패하였습니다.");
+            }
+            console.log(response.data)
+        })
+    }
+    const setPostState = function setStatus(index){
+        Axios.post('/api/post/setstate/progress', {index : index})
+        .then((response) => {
+            if(response.data.success)
+            {
+                alert("정상적으로 지원되었습니다.");
+            }
+            else{
+                alert("삭제에 실패하였습니다.");
+            }
+            console.log(response.data)
+        })
+    }
 
     return(          
     <div>
@@ -117,9 +144,13 @@ function TokenBoardPage(props){
                             <td>{element.status === 0 && ReactHtmlParser(element.content)}</td>
                             <td>{element.status === 0 && element.reward}</td>
                             <td>{element.status === 0 && element.deadline.replace("T", "  ")}</td>
-                            <td><Button>{element.status === 0 && "지원"}</Button>
+                            {
+                            element.sid === mySid &&
+                            <td> <Button onClick= {() => setPostState(element.index)}>{element.status === 0 && "지원" }</Button></td>
+                            }
+                            {element.sid === mySid &&            
                             <td ><Button onClick={() => deletepost(element.index)} >삭제</Button></td>
-                            </td>
+                            }
                             </tr>
                         )
                     }
@@ -150,7 +181,7 @@ function TokenBoardPage(props){
                                 <td>{element.status === 1 && ReactHtmlParser(element.content)}</td>
                                 <td>{element.status === 1 && element.reward}</td>
                                 <td>{element.status === 1 && element.deadline.replace("T", "  ")}</td>
-                                <td><Button>{element.status === 1 && "지원"}</Button>
+                                <td><Button onClick= {() => tradeToken(element.index)}>{ mySid === element.sid &&element.status === 1 && "도움 완료"}</Button>
                                 <td ><Button onClick={() => deletepost(element.index)} >삭제</Button></td>
                                 </td>
                                 </tr>
@@ -169,7 +200,7 @@ function TokenBoardPage(props){
                         <th>내용</th>
                         <th>보상</th>
                         <th>마감시간</th>
-                        <th>지원</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -181,9 +212,6 @@ function TokenBoardPage(props){
                                 <td>{element.status === 2 && ReactHtmlParser(element.content)}</td>
                                 <td>{element.status === 2 && element.reward}</td>
                                 <td>{element.status === 2 && element.deadline.replace("T", "  ")}</td>
-                                <td><Button>{element.status === 2 && "지원"}</Button>
-                                <td ><Button onClick={() => deletepost(element.index)} >삭제</Button></td>
-                                </td>
                                 </tr>
                             )
                         }

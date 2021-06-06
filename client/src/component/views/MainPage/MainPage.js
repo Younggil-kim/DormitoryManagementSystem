@@ -20,7 +20,7 @@ function MainPage(props) {
     const [ MyInfo, setMyInfo] = useState([]);
         
     useEffect(()=>{
-        Axios.get('/api/users/userinfo').then((response)=>{
+        Axios.get('/api/get/userinfo').then((response)=>{
             setMyInfo(response.data);
             console.log(response.data);
         })
@@ -54,7 +54,7 @@ function MainPage(props) {
     }
 
     const clickLogout = () => {
-        Axios.get('/api/users/logout')
+        Axios.get('/api/get/logout')
             .then(response => {
                 if(response.data.success){
                     props.history.push("/")
