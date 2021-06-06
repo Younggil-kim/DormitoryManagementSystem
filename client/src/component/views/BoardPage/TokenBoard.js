@@ -14,17 +14,25 @@ import {Table} from "react-bootstrap";
 function TokenBoardPage(props){
     const [viewContent , setViewContent] = useState([]);
     const [status, setStatus] = useState("");
+    const [mySid, setMysId] = useState("");
+
     let result;
     useEffect(()=>{
         var e = document.getElementById("sel");
         result = e.options[e.selectedIndex].value;
         setStatus(result);
         console.log("status", result)
-        Axios.post('http://localhost:8000/api/tokenboard', {status:result})
+        Axios.post('/api/tokenboard', {status:result})
         .then((response)=>{
             setViewContent(response.data);
             console.log(response.data);
         })
+        Axios.get('/api/get/mystudentid')
+        .then((response) => {
+            setMysId(response.data);
+            console.log("내 학번이다 ", mySid);
+        })
+
     }, result)
     
 
@@ -47,7 +55,13 @@ function TokenBoardPage(props){
         props.history.push('/predict');
     }
 
-
+    const deleteHandler = () => {
+        Axios.get("/api/delete/")
+            .then((response) => {
+                console.log(response.data)
+                alert("정상적으로 삭제되었습니다.")
+            })
+    }
 
     return(          
     <div>
@@ -83,6 +97,7 @@ function TokenBoardPage(props){
                         <th>보상</th>
                         <th>마감시간</th>
                         <th>지원</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -94,6 +109,8 @@ function TokenBoardPage(props){
                             <td>{element.status === 0 && element.reward}</td>
                             <td>{element.status === 0 && element.deadline.replace("T", "  ")}</td>
                             <td><Button>지원</Button></td>
+                            <td>{element.sid === mySid}<Button onClick={deleteHandler}>삭제</Button></td>
+                            
                             </tr>
                         )
                     }
