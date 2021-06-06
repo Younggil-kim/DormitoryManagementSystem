@@ -33,7 +33,7 @@ function TokenBoardPage(props){
             console.log("내 학번이다 ", mySid);
         })
 
-    }, result)
+    },result)
     
 
 
@@ -55,12 +55,20 @@ function TokenBoardPage(props){
         props.history.push('/predict');
     }
 
-    function deleteHandler(pid){
-        Axios.post("/api/delete/", {postid : pid})
-            .then((response) => {
-                console.log(response.data)
-                alert("정상적으로 삭제되었습니다.")
-            })
+    const deletepost = function deleteHandler(index){
+        console.log("@@@@@@@@@@")
+        Axios.post('/api/delete/', {index : index})
+        .then((response) => {
+            if(response.data.success)
+            {
+                alert("정상적으로 삭제되었습니다.");
+            }
+            else{
+                alert("삭제에 실패하였습니다.");
+            }
+            console.log(response.data)
+        })
+        
     }
 
     return(          
@@ -105,13 +113,13 @@ function TokenBoardPage(props){
                     {
                         viewContent.map(element =>
                             <tr>
-                            <td>{element.status === 0 && element.postid}</td>
+                            <td>{element.status === 0 && element.index}</td>
                             <td>{element.status === 0 && element.title}</td>
                             <td>{element.status === 0 && ReactHtmlParser(element.content)}</td>
                             <td>{element.status === 0 && element.reward}</td>
                             <td>{element.status === 0 && element.deadline.replace("T", "  ")}</td>
                             <td><Button>{element.status === 0 && "지원"}</Button>
-                            { element.sid === mySid  && <Button onClick={deleteHandler(element.postid)}>삭제</Button>}
+                            <td ><Button onClick={() => deletepost(element.index)} >삭제</Button></td>
                             </td>
                             </tr>
                         )
@@ -138,13 +146,13 @@ function TokenBoardPage(props){
                         {
                             viewContent.map(element =>
                                 <tr>
-                                <td>{element.status === 1 && element.postid}</td>
+                                <td>{element.status === 1 && element.index}</td>
                                 <td>{element.status === 1 && element.title}</td>
                                 <td>{element.status === 1 && ReactHtmlParser(element.content)}</td>
                                 <td>{element.status === 1 && element.reward}</td>
                                 <td>{element.status === 1 && element.deadline.replace("T", "  ")}</td>
                                 <td><Button>{element.status === 1 && "지원"}</Button>
-                                {element.sid === mySid &&<Button onClick={deleteHandler}>삭제</Button>}
+                                <td ><Button onClick={() => deletepost(element.index)} >삭제</Button></td>
                                 </td>
                                 </tr>
                             )
@@ -169,13 +177,13 @@ function TokenBoardPage(props){
                         {
                             viewContent.map(element =>
                                 <tr>
-                                <td>{element.status === 2 && element.postid}</td>
+                                <td>{element.status === 2 && element.index}</td>
                                 <td>{element.status === 2 && element.title}</td>
                                 <td>{element.status === 2 && ReactHtmlParser(element.content)}</td>
                                 <td>{element.status === 2 && element.reward}</td>
                                 <td>{element.status === 2 && element.deadline.replace("T", "  ")}</td>
                                 <td><Button>{element.status === 2 && "지원"}</Button>
-                                {element.sid === mySid &&<Button onClick={deleteHandler}>삭제</Button>}
+                                <td ><Button onClick={() => deletepost(element.index)} >삭제</Button></td>
                                 </td>
                                 </tr>
                             )

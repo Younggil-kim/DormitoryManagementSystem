@@ -35,7 +35,6 @@ async function findUser(email, password){
     await pgsql.query(query)
     .then(async res => {
         rows = res.rows;
-        // console.log(rows[0]);
         var sid = rows[0].sid;
         var token = jwt.sign(sid, 'secret')
         
@@ -120,7 +119,8 @@ async function setUser(email, name, password, sid){
         return false;
 
     const query = `
-        update student set email = '${email}', name = '${name}', password = '${password}' where sid = ${sid}; 
+        update student set email = '${email}', name = 
+        '${name}', password = '${password}' where sid = ${sid}; 
     `
 
     await pgsql.query(query)
@@ -155,8 +155,8 @@ async function findByToken(token){
     
     jwt.verify(token, 'secret', function(err, decoded){
         findOne(decoded, token, function(err, row){
-            console.log("row")
-            console.log(row);            
+            // console.log("row")
+            // console.log(row);            
 
 
     })

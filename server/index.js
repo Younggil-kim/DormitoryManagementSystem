@@ -27,23 +27,18 @@ app.post('/api/users/login', async (req, res) => {
     var password = req.body.password;
 
     const temp = await db.findUser(email, password);
-    console.log(temp)
 
     if(temp.length == 1){
         res.cookie("x_auth", temp[0].usrtoken)
         .status(200)
         .json({loginSuccess: true})
-        // return res.json({
-        //     loginSuccess: true,
-        //     message: "로그인 성공"
-        // })
     }else{
         return res.json({
             loginSuccess: false,
             message: "로그인 실패"
         })
     }
-})
+})  
 
 app.post('/api/users/register', async (req, res) => {
     const email = req.body.email;
@@ -53,7 +48,7 @@ app.post('/api/users/register', async (req, res) => {
 
 
     const temp = await db.setUser(email, name, password, sid);
-    console.log(temp);
+    // console.log(temp);
     if(temp){
         return res.json({
             success: true
@@ -67,29 +62,48 @@ app.post('/api/users/register', async (req, res) => {
 
 })
 
-app.post('/api/insert', (req, res) => {
+app.post('/api/insert', async (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
     const reward = req.body.rewardToken;
     const deadLine = req.body.deadLine;
-    // deadLine = deadLine.replace("T", " ");
-    // var date, time = deadLine.split(" ");
-    // console.log(date, time);
     const status = req.body.status;
 
-    if(db.insertBoard(title, content, reward, deadLine, status)){
-        return res.json({
-            success: true
-        })
-    }else{
+    let token = req.cookies.x_auth;
+    let sid;
+
+    jwt.verify(token, 'secret', (err, decoded) => {
+        if(err) throw err;
+        sid = decoded;
+    })
+    let index;
+    query = `
+        select max(index) from simpleboard;
+    `
+    await db.pgsql.query(query)
+    .then(response => {
+        index = response.rows[0].max
+    })
+    .catch(err => {
+        console.log(err)
         return res.json({
             success: false
         })
-    }
+    })
+
+    query = `
+        insert into simpleboard values (${sid}, '${title}', '${content}', ${reward},
+         '${deadLine}', ${status}, ${index+1})
+    `
+    await db.pgsql.query(query)
+    
+    return res.json({
+        success: true
+    })
 })
 
 app.post('/api/tokenboard', async (req, res) => {
-    console.log(req.body.status)
+    // console.log(req.body.status)
     const status = req.body.status
     const rows = await db.getBoard(status);
     for(var i in rows){
@@ -100,6 +114,16 @@ app.post('/api/tokenboard', async (req, res) => {
         }
     }
     res.send(rows);
+})
+
+app.get('/api/get/mystudentid', (req, res) => {
+    let token = req.cookies.x_auth;
+    let sid;
+    jwt.verify(token, 'secret', (err, decoded) => {
+        if(err) throw err;
+        sid = decoded;
+    })
+    res.send(sid);
 })
 
 app.post('/api/predict', async(req, res)=> {
@@ -131,14 +155,14 @@ app.post('/api/predict', async(req, res)=> {
 })
 let token;
 app.get('/api/auth', auth, async (req, res) => {
-    console.log("일단 여기")
+    // console.log("일단 여기")
     const query = `
         select * from student where sid = ${req.sid}
     `
 
     rows = await db.pgsql.query(query)
-    console.log("tlqkf")
-    console.log(rows.rows[0])
+    // console.log("tlqkf")
+    // console.log(rows.rows[0])
     token = rows.rows[0].token
     res.status(200).json({
         sid: rows.rows[0].sid,
@@ -155,7 +179,7 @@ app.get('/api/auth', auth, async (req, res) => {
 })
 
 app.get('/api/users/logout', auth, async (req, res) => {
-    console.log(req.sid);
+    // console.log(req.sid);
     const query = `
         update student set usrtoken = null where sid = ${req.sid};
     `
@@ -171,7 +195,7 @@ app.get('/api/users/logout', auth, async (req, res) => {
 
 app.get('/api/users/userinfo', auth,async(req, res) => {
     let token =  req.cookies.x_auth;
-    console.log(req.cookies.x_auth);
+    // console.log(req.cookies.x_auth);
     const query = `
         select * from student where usrtoken = '${token}';
     `
@@ -221,4 +245,23 @@ app.get('/api/get/student', async (req, res) => {
         success: true
     })
 
+})
+
+app.post('/api/delete/', (req, res) => {
+    index = req.body.index
+
+    let query = `
+        delete from simpleboard where index = ${index};
+    `
+    db.pgsql.query(query)
+    .then(response => {
+        return res.json({
+            success: true
+        })
+    })
+    .catch(err => {
+        return res.json({
+            success: false
+        })
+    })
 })
