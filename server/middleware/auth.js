@@ -3,11 +3,19 @@ const jwt = require('jsonwebtoken');
 
 let auth = (req, res, next) => {
     let token = req.cookies.x_auth;
-    
+    if(token == null){
+        return res.json({
+            success: false,
+            message: "토큰이 없습니다"
+        })
+    }
     let sid;
 
     jwt.verify(token, 'secret', (err, decoded) => {
-        if(err) throw err;
+        if(err) {
+            // console.log("토큰이 없죠?")
+            throw err;
+        }
         sid = decoded;
     })
 

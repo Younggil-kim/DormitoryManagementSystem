@@ -15,10 +15,11 @@ import {Table} from "react-bootstrap";
 //2. 게시판 바로가기 링크달아주기
 
 
+
 function MainPage(props) {
 
     const [ MyInfo, setMyInfo] = useState([]);
-        
+    console.log(MyInfo.length)
     useEffect(()=>{
         Axios.get('/api/get/userinfo').then((response)=>{
             setMyInfo(response.data);
@@ -57,6 +58,7 @@ function MainPage(props) {
         Axios.get('/api/get/logout')
             .then(response => {
                 if(response.data.success){
+
                     props.history.push("/")
                 }else{
                     alert("로그아웃 실패")
@@ -90,7 +92,7 @@ function MainPage(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {   
+                    { document.cookie.includes('x_auth') && MyInfo.length != null &&
                         MyInfo.map(e =>
                             <tr>
                             <td>{e.name}</td>
@@ -109,7 +111,7 @@ function MainPage(props) {
                     </tr>
                 </thead>
                 <tbody>
-                     {
+                     {document.cookie.includes('x_auth')&& MyInfo.length != null &&
                         MyInfo.map(e =>
                             <tr>
                             <td>{e.dorm}</td>
