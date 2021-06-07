@@ -177,7 +177,7 @@ app.get('/api/auth', auth, async (req, res) => {
         room: rows.rows[0].room,
         usrtoken : rows.rows[0].usrtoken,
         isadmin : rows.rows[0].isadmin == null ? false : true,   
-        isAuth: true
+        isauth: true
     })
 })
 
@@ -198,7 +198,7 @@ app.get('/api/get/logout', auth, async (req, res) => {
 
 app.get('/api/get/userinfo', auth,async(req, res) => {
     let token =  req.cookies.x_auth;
-    // console.log(req.cookies.x_auth);
+    console.log(req.cookies.x_auth);
     const query = `
         select * from student where usrtoken = '${token}';
     `

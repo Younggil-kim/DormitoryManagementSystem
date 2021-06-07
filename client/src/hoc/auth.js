@@ -11,21 +11,24 @@ export default function (SpecificComponent, option, adminRoute = null){
         const dispatch = useDispatch();
         useEffect(() => {
             dispatch(auth()).then(response => {
+                console.log(response.payload.isauth)
+                console.log(option)
                 //로그인 하지 않음
                 console.log("여기",response.payload);
-                if(!response.payload.isAuth){
+                if(!response.payload.isauth){
                     if(option === true){
                         props.history.push('/');
                     }
                 } else{
+                    
                     //로그인 한 상태
                     if(adminRoute && !response.payload.isadmin){
                         //어드민이 아닌데 로그인되어있는경우
-                        props.history.push('/');
+                        props.history.push('/main');
                     }else{
                         //
                         if(option === false){
-                            props.history.push('/')
+                            props.history.push('/main')
                         }
                     }
 
