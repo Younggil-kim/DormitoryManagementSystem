@@ -29,13 +29,13 @@
 - pip install tensorflow
 - npm install pg
 - npm install jsonwebtoken
-3. server 폴더에 secret.js파일을 생성을 해주고 다음과 같이 입력합니다.
-const config = {
-    user:'postgres',
-    host:'localhost',
-    database: 'SWEngineering',
-    password: 'hcg1208*',
-    port: '5433'
-}
-
-module.exports = {config}; 
+3. server 폴더에 secret.js파일을 생성을 해주고 다음과 같이 입력합니다.\\
+const config = {\\
+    user:'postgres',\\
+    host:'localhost',\\
+    database: 'SWEngineering',\\
+    password: 'hcg1208*',\\
+    port: '5433'\\
+}\\
+\\
+module.exports = {config};\\ 
