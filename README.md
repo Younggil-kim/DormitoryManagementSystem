@@ -20,7 +20,7 @@
 1. install npm
 
 ## How to Build
-- Server 
+### Server 
 1. Terminal을 키고 Server 폴더로 이동합니다.
 - cd server
 2. Terminal에 다음과 같이 입력해서 설치를 해줍니다.
@@ -32,5 +32,18 @@
 3. server 폴더에 secret.js파일을 생성을 해주고 다음과 같이 입력합니다.
 
 ![server js](https://user-images.githubusercontent.com/70510732/121015843-68327c80-c7d6-11eb-9909-f9244abaf0ce.PNG)
+* [Github](https://github.com/Younggil-kim/DormitoryManagementSystem)로 이동하시면 사진을 보실 수 있습니다. 
+- 이 프로젝트는 postgresql, pgAdmin4을 사용합니다. postgresql과 연동해야 이 프로젝트를 사용할 수 있고, 연동하지 못하면 이 시스템에 접근할 수 없습니다.
+4. postgresql DB에 다음 table을 생성합니다.
+- create table student(sid int, name text, email text, password text, token int, dorm text, room text, usrtoken text, isadmin int);
+- create table simpleboard(sid int, title text, content text, reward int, deadline text, status int, index int, helper int);
+- insert into student values(학번, '이름', '이메일', '패스워드', null, null, null, null, 1);
+5. Terminal에서 cd server를 입력했다면 npm run node를 입력하면 서버가 실행됩니다.
+### Client
+1. Terminal을 하나 더 키고 cd client를 입력합니다.
+2. client 폴더로 이동하였다면 npm install을 입력해줍니다.
+3. 2번 입력 후 npm run start를 입력하면 client가 실행됩니다.
 
-- 이 프로젝트는 postgresql을 사용합니다. postgresql과 연동해야 이 프로젝트를 사용할 수 있고, 연동하지 못하면 이 시스템에 접근할 수 없습니다.
+## 주의사항
+1. postgresql와 연결이 되어야 서버를 이용할 수 있고 서비스를 제공할 수 있습니다.
+2. admin페이지는 localhost:3000/admin을 입력하면 이동할 수 있고, 학생 정보 받아오기 버튼을 클릭하기 전에 student table의 tuple을 전부 지우고 실행해 주시기 바랍니다. ex) 'delete from student *;'
