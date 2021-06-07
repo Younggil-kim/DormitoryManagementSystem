@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const {auth} = require('./middleware/auth');
 const { isBuffer } = require('util');
 const { response } = require('express');
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
 // const { response } = require('express');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -42,7 +43,7 @@ app.post('/api/post/login', async (req, res) => {
     }
 })  
 
-app.post('/api/users/register', async (req, res) => {
+app.post('/api/post/register', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const sid = parseInt(req.body.sid);
@@ -359,3 +360,48 @@ app.post('/api/post/setstate/progress', async (req, res) => {
     })
 
  })
+
+ app.get('/api/get/match', async(req, res) => {
+    let result = []
+
+    const python = spawn('python', ['./algo.py']);
+
+    python.stdout.on('data', function(data){
+        var lst = data.toString('utf-8').split("\\n");
+        lst.pop()
+        
+        for(var i=0; i<50; i++){
+            var tmp = lst[i].split(" ")
+            for(var j=0; j<4; j++){
+                tmp[j] = Number(tmp[j])
+            }
+            result.push(tmp)
+        }
+
+        for(var i=0; i<50; i++){
+            for(var j=0; j<4; j++){
+                var div = parseInt(result[i][j] / 50)
+                var mod = result[i][j] % 50
+
+                result[i][j] = 201800001 + mod + div*100000
+            }
+        }
+        var room = 101 
+        for(var i=0; i<50; i++){
+            for(var j=0; j<4; j++){
+                const query = `
+                    update student set dorm = '광교관', room = '${room}호' where sid = ${result[i][j]};
+                `
+                db.pgsql.query(query)
+            }
+            if (room % 10 == 0){
+                room += 90
+            }
+            room += 1
+        }
+
+    })
+    return res.json({
+        success: true
+    })
+})
